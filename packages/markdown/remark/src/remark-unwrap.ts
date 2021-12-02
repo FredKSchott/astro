@@ -1,5 +1,7 @@
 import { visit as _visit, SKIP } from 'unist-util-visit';
 
+// This is a workaround.
+// It fixes a compatibility issue between different, incompatible ASTs given by plugins to Unist
 const visit = _visit as (node: any, type: string, callback?: (node: any, index: number, parent: any) => any) => any;
 
 // Remove the wrapping paragraph for <astro-root> islands
