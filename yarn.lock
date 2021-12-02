@@ -135,21 +135,21 @@
     leven "^3.1.0"
 
 "@astrojs/compiler@^0.5.4":
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/@astrojs/compiler/-/compiler-0.5.7.tgz#378a65afbc8d9945aa2bce2b80af1d2bf8808560"
-  integrity sha512-SMmgApjroKy6PGSjofTBbl9kIQb7/ywtiP0hYpa/x2yuiCQQoe+QLusOnNgmGDgJBmV/5UVEf1+EA+77s4acHQ==
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@astrojs/compiler/-/compiler-0.5.4.tgz#cb74173fae07f1ab34f0915ea730067ed533e02f"
+  integrity sha512-yKhY7qh2YNDsH+6kiMleVEU/SYnJ7s1dOnME5PzlJPi0IYbQEuqC7SKxhxCAVDBiZRzbCceLR8J3tqLI0Vn2Hg==
   dependencies:
     typescript "^4.3.5"
 
 "@astrojs/language-server@^0.8.2":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@astrojs/language-server/-/language-server-0.8.3.tgz#59ebfb01210f48226151235845a2398f31804500"
-  integrity sha512-9cgKUK/onWROvSOvzwNGMXL31D0B3J4xk62X6I23JbqlF/hR1nbMJcqb+/YiMN+hMXu/ImvVQUQIkCMkaIxWyA==
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@astrojs/language-server/-/language-server-0.8.2.tgz#4cb52e8d0b477c91c8665d999ee0018ecf701e84"
+  integrity sha512-AD2KDWM5CJMyhvD+ME8yJNvppliLizY34zRO+sFJ0xZ0YDIcIW9+Q0Y2gdYGoPLsr0xCu5SLpF0EmlHmTtfYEw==
   dependencies:
     lodash "^4.17.21"
     source-map "^0.7.3"
     ts-morph "^12.0.0"
-    typescript "^4.5.2"
+    typescript "^4.5.1-rc"
     vscode-css-languageservice "^5.1.1"
     vscode-emmet-helper "2.1.2"
     vscode-html-languageservice "^3.0.3"
@@ -8885,7 +8885,7 @@ typescript@4.4.4:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
   integrity sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==
 
-typescript@^4.3.1-rc, typescript@^4.3.5:
+typescript@^4.3.5, typescript@^4.5.1-rc:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.2.tgz#8ac1fba9f52256fdb06fb89e4122fa6a346c2998"
   integrity sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw==
