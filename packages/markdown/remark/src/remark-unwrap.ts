@@ -1,4 +1,6 @@
-import { visit, SKIP } from 'unist-util-visit';
+import { visit as _visit, SKIP } from 'unist-util-visit';
+
+const visit = _visit as (node: any, type: string, callback?: (node: any, index: number, parent: any) => any) => any;
 
 // Remove the wrapping paragraph for <astro-root> islands
 export default function remarkUnwrap() {
