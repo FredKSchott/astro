@@ -1,9 +1,7 @@
 name: 'Nightly'
 
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '0 12 * * *'
+  push:
 
 jobs:
   stat:
@@ -30,7 +28,6 @@ jobs:
           branch: ${{ github.head_ref }}
 
   lockfile:
-    if: github.repository_owner == 'withastro'
     runs-on: ubuntu-latest
     steps:
       
