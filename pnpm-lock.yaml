@@ -4,10 +4,20 @@ settings:
   autoInstallPeers: false
   excludeLinksFromLockfile: false
 
+overrides:
+  '@astrojs/node': link:packages/integrations/node
+  astro: link:packages/astro
+
 importers:
 
   .:
     dependencies:
+      '@astrojs/node':
+        specifier: link:packages/integrations/node
+        version: link:packages/integrations/node
+      astro:
+        specifier: link:packages/astro
+        version: link:packages/astro
       astro-benchmark:
         specifier: workspace:*
         version: link:benchmark
@@ -24,6 +34,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.29.8
         version: 2.29.8(@types/node@18.19.130)
+      '@flue/client':
+        specifier: ^0.0.1
+        version: 0.0.1(typescript@5.9.3)
       '@types/node':
         specifier: ^18.19.115
         version: 18.19.130
@@ -55,7 +68,7 @@ importers:
         specifier: ^0.2.15
         version: 0.2.15
       turbo:
-        specifier: ^2.8.3
+        specifier: ^2.8.1
         version: 2.8.3
       typescript:
         specifier: ~5.9.3
@@ -63,6 +76,9 @@ importers:
       typescript-eslint:
         specifier: ^8.54.0
         version: 8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      valibot:
+        specifier: ^1.0.0
+        version: 1.2.0(typescript@5.9.3)
 
   benchmark:
     dependencies:
@@ -70,7 +86,7 @@ importers:
         specifier: workspace:*
         version: link:../packages/integrations/mdx
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../packages/integrations/node
         version: link:../packages/integrations/node
       '@benchmark/adapter':
         specifier: workspace:*
@@ -79,7 +95,7 @@ importers:
         specifier: workspace:*
         version: link:packages/timer
       astro:
-        specifier: workspace:*
+        specifier: link:../packages/astro
         version: link:../packages/astro
       autocannon:
         specifier: ^8.0.0
@@ -112,6 +128,9 @@ importers:
 
   benchmark/packages/adapter:
     dependencies:
+      astro:
+        specifier: link:../../../packages/astro
+        version: link:../../../packages/astro
       server-destroy:
         specifier: ^1.0.1
         version: 1.0.1
@@ -119,15 +138,15 @@ importers:
       '@types/server-destroy':
         specifier: ^1.0.4
         version: 1.0.4
-      astro:
-        specifier: workspace:*
-        version: link:../../../packages/astro
       astro-scripts:
         specifier: workspace:*
         version: link:../../../scripts
 
   benchmark/packages/timer:
     dependencies:
+      astro:
+        specifier: link:../../../packages/astro
+        version: link:../../../packages/astro
       server-destroy:
         specifier: ^1.0.1
         version: 1.0.1
@@ -135,9 +154,6 @@ importers:
       '@types/server-destroy':
         specifier: ^1.0.4
         version: 1.0.4
-      astro:
-        specifier: workspace:*
-        version: link:../../../packages/astro
       astro-scripts:
         specifier: workspace:*
         version: link:../../../scripts
@@ -145,34 +161,34 @@ importers:
   benchmark/static-projects/build-hybrid:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:^
+        specifier: link:../../../packages/integrations/node
         version: link:../../../packages/integrations/node
       astro:
-        specifier: workspace:^
+        specifier: link:../../../packages/astro
         version: link:../../../packages/astro
 
   benchmark/static-projects/build-server:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:^
+        specifier: link:../../../packages/integrations/node
         version: link:../../../packages/integrations/node
       astro:
-        specifier: workspace:^
+        specifier: link:../../../packages/astro
         version: link:../../../packages/astro
 
   benchmark/static-projects/build-static:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:^
+        specifier: link:../../../packages/integrations/node
         version: link:../../../packages/integrations/node
       astro:
-        specifier: workspace:^
+        specifier: link:../../../packages/astro
         version: link:../../../packages/astro
 
   examples/basics:
     dependencies:
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
 
   examples/blog:
@@ -187,16 +203,16 @@ importers:
         specifier: ^3.6.1-beta.3
         version: link:../../packages/integrations/sitemap
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       sharp:
         specifier: ^0.34.3
         version: 0.34.5
 
   examples/component:
-    devDependencies:
+    dependencies:
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
 
   examples/container-with-vitest:
@@ -205,7 +221,7 @@ importers:
         specifier: ^5.0.0-beta.3
         version: link:../../packages/integrations/react
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       react:
         specifier: ^18.3.1
@@ -236,7 +252,7 @@ importers:
         specifier: ^3.15.8
         version: 3.15.8
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
 
   examples/framework-multiple:
@@ -263,7 +279,7 @@ importers:
         specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.28)
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       preact:
         specifier: ^10.28.3
@@ -293,7 +309,7 @@ importers:
         specifier: ^2.7.0
         version: 2.7.0(preact@10.28.3)
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       preact:
         specifier: ^10.28.3
@@ -311,7 +327,7 @@ importers:
         specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.28)
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       react:
         specifier: ^18.3.1
@@ -326,7 +342,7 @@ importers:
         specifier: ^6.0.0-beta.2
         version: link:../../packages/integrations/solid
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       solid-js:
         specifier: ^1.9.11
@@ -338,7 +354,7 @@ importers:
         specifier: ^8.0.0-beta.2
         version: link:../../packages/integrations/svelte
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       svelte:
         specifier: ^5.49.2
@@ -350,7 +366,7 @@ importers:
         specifier: ^6.0.0-beta.1
         version: link:../../packages/integrations/vue
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       vue:
         specifier: ^3.5.27
@@ -359,40 +375,40 @@ importers:
   examples/hackernews:
     dependencies:
       '@astrojs/node':
-        specifier: ^10.0.0-beta.3
+        specifier: link:../../packages/integrations/node
         version: link:../../packages/integrations/node
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
 
   examples/integration:
-    devDependencies:
+    dependencies:
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
 
   examples/minimal:
     dependencies:
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
 
   examples/portfolio:
     dependencies:
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
 
   examples/ssr:
     dependencies:
       '@astrojs/node':
-        specifier: ^10.0.0-beta.3
+        specifier: link:../../packages/integrations/node
         version: link:../../packages/integrations/node
       '@astrojs/svelte':
         specifier: ^8.0.0-beta.2
         version: link:../../packages/integrations/svelte
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       svelte:
         specifier: ^5.49.2
@@ -401,7 +417,7 @@ importers:
   examples/starlog:
     dependencies:
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       sass:
         specifier: ^1.97.3
@@ -411,13 +427,14 @@ importers:
         version: 0.34.5
 
   examples/toolbar-app:
+    dependencies:
+      astro:
+        specifier: link:../../packages/astro
+        version: link:../../packages/astro
     devDependencies:
       '@types/node':
         specifier: ^18.17.8
         version: 18.19.130
-      astro:
-        specifier: ^6.0.0-beta.10
-        version: link:../../packages/astro
 
   examples/with-markdoc:
     dependencies:
@@ -425,7 +442,7 @@ importers:
         specifier: ^1.0.0-beta.9
         version: link:../../packages/integrations/markdoc
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
 
   examples/with-mdx:
@@ -437,7 +454,7 @@ importers:
         specifier: ^5.0.0-beta.3
         version: link:../../packages/integrations/preact
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       preact:
         specifier: ^10.28.3
@@ -452,7 +469,7 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(nanostores@1.1.0)(preact@10.28.3)
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       nanostores:
         specifier: ^1.1.0
@@ -473,7 +490,7 @@ importers:
         specifier: ^1.9.0
         version: 1.9.0
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       canvas-confetti:
         specifier: ^1.9.4
@@ -485,7 +502,7 @@ importers:
   examples/with-vitest:
     dependencies:
       astro:
-        specifier: ^6.0.0-beta.10
+        specifier: link:../../packages/astro
         version: link:../../packages/astro
       vitest:
         specifier: ^3.2.4
@@ -810,7 +827,7 @@ importers:
   packages/astro/e2e/fixtures/_deps/astro-linked-lib:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/e2e/fixtures/actions-blog:
@@ -822,7 +839,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../db
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       '@astrojs/react':
         specifier: workspace:*
@@ -834,7 +851,7 @@ importers:
         specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.28)
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -855,7 +872,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../db
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       '@astrojs/react':
         specifier: workspace:*
@@ -867,7 +884,7 @@ importers:
         specifier: npm:types-react-dom
         version: types-react-dom@19.0.0-alpha.3
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: 19.2.4
@@ -888,7 +905,7 @@ importers:
         specifier: link:../_deps/astro-linked-lib
         version: link:../_deps/astro-linked-lib
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -900,7 +917,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       vue:
         specifier: ^3.5.27
@@ -919,7 +936,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/client-only:
@@ -959,7 +976,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/cloudflare:
@@ -992,7 +1009,7 @@ importers:
         specifier: ^6.0.3
         version: 6.0.4(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3))
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       clsx:
         specifier: ^2.1.1
@@ -1021,7 +1038,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/csp-server-islands:
@@ -1030,13 +1047,13 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       '@astrojs/react':
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1048,7 +1065,7 @@ importers:
   packages/astro/e2e/fixtures/css:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/custom-client-directives:
@@ -1057,7 +1074,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1072,7 +1089,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -1084,7 +1101,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -1093,7 +1110,7 @@ importers:
   packages/astro/e2e/fixtures/error-sass:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       sass:
         specifier: ^1.97.3
@@ -1117,7 +1134,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -1144,7 +1161,7 @@ importers:
   packages/astro/e2e/fixtures/hmr:
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       sass:
         specifier: ^1.97.3
@@ -1156,7 +1173,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -1165,10 +1182,10 @@ importers:
   packages/astro/e2e/fixtures/i18n:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/multiple-frameworks:
@@ -1214,7 +1231,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/namespaced-component:
@@ -1230,7 +1247,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/nested-in-preact:
@@ -1270,7 +1287,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/nested-in-react:
@@ -1310,7 +1327,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/nested-in-solid:
@@ -1350,7 +1367,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/nested-in-svelte:
@@ -1390,7 +1407,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/nested-in-vue:
@@ -1430,7 +1447,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/nested-recursive:
@@ -1470,13 +1487,13 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/nested-styles:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/pass-js:
@@ -1492,7 +1509,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/preact-compat-component:
@@ -1501,7 +1518,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -1516,7 +1533,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -1531,7 +1548,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -1540,7 +1557,7 @@ importers:
   packages/astro/e2e/fixtures/prefetch:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/react-component:
@@ -1552,7 +1569,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1567,13 +1584,13 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       '@astrojs/react':
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1585,10 +1602,10 @@ importers:
   packages/astro/e2e/fixtures/server-islands-key:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/solid-circular:
@@ -1597,7 +1614,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/solid
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
     devDependencies:
       solid-js:
@@ -1613,7 +1630,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/solid
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       solid-js:
         specifier: ^1.9.11
@@ -1625,7 +1642,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/solid
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
     devDependencies:
       solid-js:
@@ -1641,7 +1658,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/svelte
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       svelte:
         specifier: ^5.49.1
@@ -1653,7 +1670,7 @@ importers:
         specifier: ^4.1.18
         version: 4.1.18(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       tailwindcss:
         specifier: ^4.1.18
@@ -1665,7 +1682,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1677,7 +1694,7 @@ importers:
   packages/astro/e2e/fixtures/view-transitions:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       '@astrojs/react':
         specifier: workspace:*
@@ -1692,7 +1709,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1713,7 +1730,7 @@ importers:
   packages/astro/e2e/fixtures/vite-virtual-modules:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/e2e/fixtures/vue-component:
@@ -1725,7 +1742,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       vue:
         specifier: ^3.5.27
@@ -1752,7 +1769,7 @@ importers:
         specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.28)
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1779,7 +1796,7 @@ importers:
         specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.28)
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1806,7 +1823,7 @@ importers:
         specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.28)
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1818,7 +1835,7 @@ importers:
   packages/astro/performance/fixtures/utils:
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1839,7 +1856,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1857,7 +1874,7 @@ importers:
   packages/astro/test/fixtures/actions:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/alias:
@@ -1866,7 +1883,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/svelte
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       svelte:
         specifier: ^5.49.1
@@ -1881,7 +1898,7 @@ importers:
         specifier: workspace:*
         version: link:deps/namespace-package
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       svelte:
         specifier: ^5.49.1
@@ -1893,7 +1910,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/svelte
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       svelte:
         specifier: ^5.49.1
@@ -1902,7 +1919,7 @@ importers:
   packages/astro/test/fixtures/alias-tsconfig-no-baseurl:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/alias-tsconfig/deps/namespace-package: {}
@@ -1910,25 +1927,25 @@ importers:
   packages/astro/test/fixtures/api-routes:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/asset-url-base:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro pages:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-assets:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-assets-dir:
@@ -1937,7 +1954,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1955,7 +1972,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1970,7 +1987,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -1988,7 +2005,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -2000,7 +2017,7 @@ importers:
         specifier: ^0.9.6
         version: 0.9.6(prettier-plugin-astro@0.14.1)(prettier@3.8.1)(typescript@5.9.3)
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       typescript:
         specifier: ^5.9.3
@@ -2012,7 +2029,7 @@ importers:
         specifier: ^0.9.6
         version: 0.9.6(prettier-plugin-astro@0.14.1)(prettier@3.8.1)(typescript@5.9.3)
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       typescript:
         specifier: ^5.9.3
@@ -2021,7 +2038,7 @@ importers:
   packages/astro/test/fixtures/astro-check-watch:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-children:
@@ -2036,7 +2053,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -2051,7 +2068,7 @@ importers:
   packages/astro/test/fixtures/astro-class-list:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-client-only:
@@ -2066,7 +2083,7 @@ importers:
         specifier: file:./pkg
         version: link:pkg
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -2086,7 +2103,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -2098,55 +2115,55 @@ importers:
   packages/astro/test/fixtures/astro-component-code:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-components:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-cookies:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-css-bundling:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-css-bundling-nested-layouts:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-dev-headers:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-dev-http2:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-directives:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-doctype:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-dynamic:
@@ -2158,7 +2175,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/svelte
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -2173,31 +2190,31 @@ importers:
   packages/astro/test/fixtures/astro-env:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-env-content-collections:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-env-required-public:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-env-server-fail:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-env-server-secret:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-envs:
@@ -2206,7 +2223,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       vue:
         specifier: ^3.5.27
@@ -2218,7 +2235,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -2227,7 +2244,7 @@ importers:
   packages/astro/test/fixtures/astro-external-files:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-fallback:
@@ -2236,7 +2253,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -2245,32 +2262,32 @@ importers:
   packages/astro/test/fixtures/astro-generator:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-get-static-paths:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-global:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-head:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-info-versions:
     dependencies:
       '@astrojs/node':
-        specifier: 9.4.1
-        version: 9.4.1(astro@packages+astro)
+        specifier: link:../../../../integrations/node
+        version: link:../../../../integrations/node
       '@astrojs/react':
         specifier: 4.3.0
         version: 4.3.0(@types/node@25.2.2)(@types/react-dom@19.1.1(@types/react@19.1.1))(@types/react@19.1.1)(jiti@2.6.1)(lightningcss@1.30.2)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2)
@@ -2281,7 +2298,7 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(@types/react@19.1.1)
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: 19.1.1
@@ -2296,31 +2313,31 @@ importers:
   packages/astro/test/fixtures/astro-jsx:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-manifest:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-manifest-invalid:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-markdown:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-markdown-frontmatter-injection:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       mdast-util-to-string:
         specifier: ^4.0.0
@@ -2335,7 +2352,7 @@ importers:
   packages/astro/test/fixtures/astro-markdown-plugins:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       hast-util-select:
         specifier: ^6.0.4
@@ -2347,97 +2364,97 @@ importers:
   packages/astro/test/fixtures/astro-markdown-remarkRehype:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-markdown-shiki/default-color:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/astro-markdown-shiki/langs:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/astro-markdown-shiki/normal:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/astro-markdown-shiki/themes-custom:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/astro-markdown-shiki/themes-integrated:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/astro-markdown-shiki/wrap-false:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/astro-markdown-shiki/wrap-null:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/astro-markdown-shiki/wrap-true:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/astro-markdown-url:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-mode:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-not-response:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-object-style:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-page-directory-url:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-pagination:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-pagination-root-spread:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-partial-html:
@@ -2446,7 +2463,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -2458,19 +2475,19 @@ importers:
   packages/astro/test/fixtures/astro-preview-headers:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-public:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-response:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-scripts:
@@ -2479,7 +2496,7 @@ importers:
         specifier: ^4.1.18
         version: 4.1.18(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       tailwindcss:
         specifier: ^4.1.18
@@ -2488,7 +2505,7 @@ importers:
   packages/astro/test/fixtures/astro-sitemap-rss:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-slot-with-client:
@@ -2497,7 +2514,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -2506,7 +2523,7 @@ importers:
   packages/astro/test/fixtures/astro-slots:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/astro-slots-nested:
@@ -2527,7 +2544,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -2554,7 +2571,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -2566,7 +2583,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -2575,34 +2592,34 @@ importers:
   packages/astro/test/fixtures/build-concurrency:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/build-readonly-file:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/client-address:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/client-address-node:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/code-component:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/component-library:
@@ -2620,7 +2637,7 @@ importers:
         specifier: workspace:*
         version: link:../component-library-shared
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -2645,31 +2662,31 @@ importers:
         version: 18.3.1
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/config-host:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/config-path:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/config-vite:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/config-vite-css-target:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/container-custom-renderers:
@@ -2681,7 +2698,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -2699,7 +2716,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content with spaces in folder name:
@@ -2708,13 +2725,13 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-collection-references:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-collections:
@@ -2723,7 +2740,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-collections-base:
@@ -2732,25 +2749,25 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-collections-cache-invalidation:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-collections-empty-dir:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-collections-empty-md-file:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-collections-mutation:
@@ -2759,13 +2776,13 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-collections-number-id:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       zod:
         specifier: ^4.3.6
@@ -2774,13 +2791,13 @@ importers:
   packages/astro/test/fixtures/content-collections-same-contents:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-collections-with-config-mjs:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-intellisense:
@@ -2792,7 +2809,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-layer:
@@ -2801,13 +2818,13 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-layer-loader-schema-function:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-layer-markdoc:
@@ -2819,7 +2836,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -2831,7 +2848,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-layer-rendering:
@@ -2840,7 +2857,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-ssr-integration:
@@ -2849,7 +2866,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/content-static-paths-integration:
@@ -2858,25 +2875,25 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-base:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-data-url:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-deletion:
@@ -2888,55 +2905,55 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-errors:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-fs-config:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-infersize:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-layout:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-picture-emit-file:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-remark-imgattr:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-ssg:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-ssr:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-svg:
@@ -2945,7 +2962,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-svg-in-island:
@@ -2954,7 +2971,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^19.2.4
@@ -2966,13 +2983,13 @@ importers:
   packages/astro/test/fixtures/core-image-svg-optimized:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/core-image-unconventional-settings:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/csp:
@@ -2981,7 +2998,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^19.2.4
@@ -2993,19 +3010,19 @@ importers:
   packages/astro/test/fixtures/csp-adapter:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/csp-fonts:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/csrf-check-origin:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-assets:
@@ -3014,7 +3031,7 @@ importers:
         specifier: file:packages/font-awesome
         version: link:packages/font-awesome
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-assets/packages/font-awesome: {}
@@ -3025,7 +3042,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/svelte
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       svelte:
         specifier: ^5.49.1
@@ -3043,7 +3060,7 @@ importers:
         specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.28)
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -3055,49 +3072,49 @@ importers:
   packages/astro/test/fixtures/css-double-bundle:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-import-as-inline:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-inline-stylesheets:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-inline-stylesheets-2:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-inline-stylesheets-3:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-no-code-split:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-order:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-order-dynamic-import:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-order-import:
@@ -3106,7 +3123,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -3118,25 +3135,25 @@ importers:
   packages/astro/test/fixtures/css-order-layout:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/css-order-transparent:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-html:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-injected:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-injected-from-dep:
@@ -3145,142 +3162,142 @@ importers:
         specifier: workspace:*
         version: link:../custom-404-pkg
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-locals:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-loop-case-1:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-loop-case-2:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-loop-case-3:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-loop-case-4:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-loop-case-5:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-md:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-pkg:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-404-static:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-500:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-500-failing:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-500-middleware:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-assets-name:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-fetch-error-pages:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/custom-renderer:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/data-collections:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/data-collections-schema:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/debug-component:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/dont-delete-me:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/dynamic-endpoint-collision:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/dynamic-route-build-file:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/dynamic-route-collision:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/entry-file-names:
@@ -3289,7 +3306,7 @@ importers:
         specifier: 'workspace:'
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -3298,31 +3315,31 @@ importers:
   packages/astro/test/fixtures/error-bad-js:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/error-build-location:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/error-non-error:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/extension-matching:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/feature-support-message-suppresion:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/fetch:
@@ -3337,7 +3354,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -3352,7 +3369,7 @@ importers:
   packages/astro/test/fixtures/fonts:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/fontsource-package:
@@ -3364,73 +3381,73 @@ importers:
         specifier: 5.2.8
         version: 5.2.8
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/get-static-paths-pages:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/glob-pages-css:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/head-injection:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/hmr-css:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/hmr-new-page:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/hoisted-imports:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/html-component:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/html-escape:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/html-escape-complex:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/html-page:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/html-slots:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/hydration-race:
@@ -3439,7 +3456,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -3448,112 +3465,112 @@ importers:
   packages/astro/test/fixtures/i18n-double-prefix:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-locale-index-format-file:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-base:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-dynamic:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-fallback:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-fallback-index:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-fallback-rewrite:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-fallback-rewrite-filename:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-fallback-rewrite-hybrid:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-manual:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-manual-with-default-middleware:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-prefix-always:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-prefix-other-locales:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-redirect-preferred-language:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-routing-subdomain:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/i18n-server-island:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/import-ts-with-js:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/impostor-mdx-file:
@@ -3562,7 +3579,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -3574,13 +3591,13 @@ importers:
   packages/astro/test/fixtures/integration-add-page-extension:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/integration-server-setup:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/jsx:
@@ -3623,7 +3640,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/large-array:
@@ -3632,7 +3649,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/solid
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       solid-js:
         specifier: ^1.9.11
@@ -3641,22 +3658,22 @@ importers:
   packages/astro/test/fixtures/lazy-layout:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/legacy-collections-backwards-compat:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/live-loaders:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/markdown:
@@ -3665,43 +3682,43 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/middleware space:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/middleware-full-ssr:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/middleware-no-user-middleware:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/middleware-sequence-request-clone:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/middleware-sequence-rewrite:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/middleware-ssg:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/middleware-tailwind:
@@ -3710,7 +3727,7 @@ importers:
         specifier: ^4.1.18
         version: 4.1.18(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       tailwindcss:
         specifier: ^4.1.18
@@ -3719,13 +3736,13 @@ importers:
   packages/astro/test/fixtures/middleware-virtual:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/minification-html:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/multiple-renderers:
@@ -3737,7 +3754,7 @@ importers:
         specifier: file:./renderers/two
         version: link:renderers/two
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/multiple-renderers/renderers/one: {}
@@ -3747,31 +3764,31 @@ importers:
   packages/astro/test/fixtures/non-ascii-path/测试:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/non-html-pages:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/page-format:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/page-level-styles:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/parallel:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/partials:
@@ -3780,13 +3797,13 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/passthrough-image-service:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/postcss:
@@ -3801,7 +3818,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       autoprefixer:
         specifier: ^10.4.24
@@ -3832,7 +3849,7 @@ importers:
         specifier: workspace:*
         version: link:packages/react-lib
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -3853,7 +3870,7 @@ importers:
         specifier: 2.6.2
         version: 2.6.2(preact@10.28.3)
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -3862,19 +3879,19 @@ importers:
   packages/astro/test/fixtures/prerender-conflict-dynamic-dynamic:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/prerender-conflict-static-dynamic:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/public-base-404:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/react-and-solid:
@@ -3886,7 +3903,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/solid
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -3911,19 +3928,19 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/redirects:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/redirects-i18n:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/reexport-astro-containing-client-component:
@@ -3932,7 +3949,7 @@ importers:
         specifier: 'workspace:'
         version: link:../../../../integrations/preact
       astro:
-        specifier: 'workspace:'
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -3941,118 +3958,118 @@ importers:
   packages/astro/test/fixtures/remote-css:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/request-signal:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/reroute:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/reuse-injected-entrypoint:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/rewrite-custom-404:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/rewrite-dynamic-routing:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/rewrite-i18n-manual-routing:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/rewrite-issue-13633:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/rewrite-route-pattern:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/rewrite-runtime-error:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/rewrite-runtime-error-custom500:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/rewrite-server:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/rewrite-trailing-slash-never:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/rewrite-with-base:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/root-srcdir-css:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/route-guard:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/route-manifest:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/routing-priority:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/scoped-style-strategy:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/server-entry:
@@ -4061,13 +4078,13 @@ importers:
         specifier: file:./fake-adapter
         version: file:packages/astro/test/fixtures/server-entry/fake-adapter
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/server-entry/fake-adapter:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/server-islands/hybrid:
@@ -4076,7 +4093,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../../integrations/svelte
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
       svelte:
         specifier: ^5.49.1
@@ -4091,7 +4108,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../../integrations/svelte
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
       svelte:
         specifier: ^5.49.1
@@ -4100,13 +4117,13 @@ importers:
   packages/astro/test/fixtures/sessions:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/set-html:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/slots-preact:
@@ -4118,7 +4135,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -4133,7 +4150,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -4151,7 +4168,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/solid
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       solid-js:
         specifier: ^1.9.11
@@ -4166,7 +4183,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/svelte
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       svelte:
         specifier: ^5.49.1
@@ -4181,7 +4198,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       vue:
         specifier: ^3.5.27
@@ -4199,7 +4216,7 @@ importers:
         specifier: file:./deps/solid-jsx-component
         version: link:deps/solid-jsx-component
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       solid-js:
         specifier: ^1.9.11
@@ -4217,7 +4234,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -4229,7 +4246,7 @@ importers:
   packages/astro/test/fixtures/space in folder name/app:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../..
         version: link:../../../..
 
   packages/astro/test/fixtures/special-chars-in-component-imports:
@@ -4241,7 +4258,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -4253,22 +4270,22 @@ importers:
   packages/astro/test/fixtures/ssr-api-route:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-assets:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-dynamic:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-env:
@@ -4277,7 +4294,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -4286,31 +4303,31 @@ importers:
   packages/astro/test/fixtures/ssr-error:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-error-pages:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-locals:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-markdown:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-params:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-partytown:
@@ -4319,43 +4336,43 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/partytown
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-prerender:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-prerender-get-static-paths:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-preview:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-request:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-response:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-script:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-scripts:
@@ -4364,7 +4381,7 @@ importers:
         specifier: 'workspace:'
         version: link:../../../../integrations/preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -4373,16 +4390,16 @@ importers:
   packages/astro/test/fixtures/ssr-split-manifest:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/ssr-trailing-slash:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/static-build:
@@ -4394,7 +4411,7 @@ importers:
         specifier: workspace:*
         version: link:pkg
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -4403,13 +4420,13 @@ importers:
   packages/astro/test/fixtures/static-build-code-component:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/static-build-dir:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/static-build-frameworks:
@@ -4421,7 +4438,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       preact:
         specifier: ^10.28.3
@@ -4436,19 +4453,19 @@ importers:
   packages/astro/test/fixtures/static-build-page-url-format:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/static-build-ssr:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       '@test/static-build-pkg':
         specifier: workspace:*
         version: link:../static-build/pkg
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/static-build/pkg: {}
@@ -4456,7 +4473,7 @@ importers:
   packages/astro/test/fixtures/static-redirect:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/streaming:
@@ -4465,7 +4482,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -4480,7 +4497,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/svelte
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       svelte:
         specifier: ^5.49.1
@@ -4489,7 +4506,7 @@ importers:
   packages/astro/test/fixtures/svg-deduplication:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/tailwindcss:
@@ -4501,7 +4518,7 @@ importers:
         specifier: ^4.1.18
         version: 4.1.18(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       tailwindcss:
         specifier: ^4.1.18
@@ -4510,7 +4527,7 @@ importers:
   packages/astro/test/fixtures/third-party-astro:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro-embed:
         specifier: ^0.8.0
@@ -4519,25 +4536,25 @@ importers:
   packages/astro/test/fixtures/type-imports:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/unused-slot:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/url-import-suffix:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/user-route-priority:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/view-transitions:
@@ -4546,7 +4563,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/react
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       react:
         specifier: ^18.3.1
@@ -4558,19 +4575,19 @@ importers:
   packages/astro/test/fixtures/virtual-astro-file:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/virtual-routes:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/vitest:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       vitest:
         specifier: ^3.2.4
@@ -4582,7 +4599,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       vue:
         specifier: ^3.5.27
@@ -4594,7 +4611,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       vue:
         specifier: ^3.5.27
@@ -4609,7 +4626,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       svelte:
         specifier: ^5.49.1
@@ -4621,19 +4638,19 @@ importers:
   packages/astro/test/fixtures/with-endpoint-routes:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/with-subpath-no-trailing-slash:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/fixtures/without-site-config:
     dependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/astro/test/units/_temp-fixtures:
@@ -4642,7 +4659,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../integrations/mdx
       astro:
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
 
   packages/create-astro:
@@ -4703,7 +4720,7 @@ importers:
         specifier: ^21.0.3
         version: 21.0.3
       astro:
-        specifier: workspace:*
+        specifier: link:../astro
         version: link:../astro
       astro-scripts:
         specifier: workspace:*
@@ -4727,7 +4744,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/db-in-src:
@@ -4736,7 +4753,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/error-handling:
@@ -4745,7 +4762,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/integration-only:
@@ -4754,7 +4771,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/integrations:
@@ -4763,7 +4780,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/libsql-remote:
@@ -4772,7 +4789,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/local-prod:
@@ -4781,7 +4798,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/no-apptoken:
@@ -4790,7 +4807,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/no-seed:
@@ -4799,7 +4816,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/recipes:
@@ -4808,7 +4825,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/static-remote:
@@ -4817,7 +4834,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/db/test/fixtures/ticketing-example:
@@ -4829,7 +4846,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../integrations/node
         version: link:../../../../integrations/node
       '@astrojs/react':
         specifier: workspace:*
@@ -4841,7 +4858,7 @@ importers:
         specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.28)
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
       open-props:
         specifier: ^1.7.23
@@ -4868,7 +4885,7 @@ importers:
         specifier: 1.58.1
         version: 1.58.1
       astro:
-        specifier: workspace:*
+        specifier: link:../../astro
         version: link:../../astro
       astro-scripts:
         specifier: workspace:*
@@ -4889,7 +4906,7 @@ importers:
         specifier: ^3.15.8
         version: 3.15.8
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/alpinejs/test/fixtures/directive:
@@ -4904,7 +4921,7 @@ importers:
         specifier: ^3.15.8
         version: 3.15.8
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/alpinejs/test/fixtures/plugin-script-import:
@@ -4919,7 +4936,7 @@ importers:
         specifier: ^3.15.8
         version: 3.15.8
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/cloudflare:
@@ -4933,6 +4950,9 @@ importers:
       '@cloudflare/vite-plugin':
         specifier: ^1.23.0
         version: 1.23.0(@cloudflare/workers-types@4.20260203.0)(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))(workerd@1.20260131.0)
+      astro:
+        specifier: link:../../astro
+        version: link:../../astro
       piccolore:
         specifier: ^0.1.3
         version: 0.1.3
@@ -4949,9 +4969,6 @@ importers:
       '@types/node':
         specifier: ^25.2.2
         version: 25.2.2
-      astro:
-        specifier: workspace:*
-        version: link:../../astro
       astro-scripts:
         specifier: workspace:*
         version: link:../../../scripts
@@ -4968,7 +4985,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
     devDependencies:
       wrangler:
@@ -4981,7 +4998,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
     devDependencies:
       wrangler:
@@ -4994,7 +5011,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/cloudflare/test/fixtures/compile-image-service:
@@ -5003,7 +5020,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/cloudflare/test/fixtures/custom-entryfile:
@@ -5012,7 +5029,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       wrangler:
         specifier: ^4.61.1
@@ -5024,7 +5041,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/cloudflare/test/fixtures/no-output:
@@ -5033,7 +5050,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/cloudflare/test/fixtures/prerender-styles:
@@ -5045,7 +5062,7 @@ importers:
         specifier: ^4.1.18
         version: 4.1.18(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       tailwindcss:
         specifier: ^4.1.18
@@ -5057,7 +5074,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/cloudflare/test/fixtures/routing-priority:
@@ -5066,7 +5083,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
     devDependencies:
       wrangler:
@@ -5079,7 +5096,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/cloudflare/test/fixtures/sessions:
@@ -5089,7 +5106,7 @@ importers:
         version: link:../../..
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       wrangler:
         specifier: ^4.61.1
@@ -5101,7 +5118,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/cloudflare/test/fixtures/vite-plugin:
@@ -5131,7 +5148,7 @@ importers:
         specifier: ^6.0.3
         version: 6.0.4(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3))
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       react:
         specifier: ^18.3.1
@@ -5155,7 +5172,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/cloudflare/test/fixtures/with-solid-js:
@@ -5167,7 +5184,7 @@ importers:
         specifier: ^5.1.3
         version: 5.1.3(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(solid-js@1.9.11)(tsx@4.21.0)(yaml@2.8.2)
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       solid-js:
         specifier: ^1.9.11
@@ -5182,7 +5199,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../svelte
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       svelte:
         specifier: ^5.49.1
@@ -5197,7 +5214,7 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(@types/node@25.2.2)(astro@packages+astro)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(sass@1.97.3)(tsx@4.21.0)(vue@3.5.27(typescript@5.9.3))(yaml@2.8.2)
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       vue:
         specifier: ^3.5.27
@@ -5209,7 +5226,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc:
@@ -5226,6 +5243,9 @@ importers:
       '@markdoc/markdoc':
         specifier: ^0.5.4
         version: 0.5.4(@types/react@19.1.1)(react@19.2.4)
+      astro:
+        specifier: link:../../astro
+        version: link:../../astro
       esbuild:
         specifier: ^0.25.0
         version: 0.25.5
@@ -5239,9 +5259,6 @@ importers:
       '@types/markdown-it':
         specifier: ^14.1.2
         version: 14.1.2
-      astro:
-        specifier: workspace:*
-        version: link:../../astro
       astro-scripts:
         specifier: workspace:*
         version: link:../../../scripts
@@ -5261,7 +5278,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/headings:
@@ -5270,7 +5287,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/headings-custom:
@@ -5279,7 +5296,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/image-assets:
@@ -5288,7 +5305,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/image-assets-custom:
@@ -5297,7 +5314,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/propagated-assets:
@@ -5306,7 +5323,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/render with-space:
@@ -5315,7 +5332,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/render-html:
@@ -5324,7 +5341,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/render-null:
@@ -5333,7 +5350,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/render-partials:
@@ -5342,7 +5359,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/render-simple:
@@ -5351,7 +5368,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/render-typographer:
@@ -5360,7 +5377,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/render-with-components:
@@ -5372,7 +5389,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       preact:
         specifier: ^10.28.3
@@ -5384,7 +5401,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/render-with-extends-components:
@@ -5393,7 +5410,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/render-with-indented-components:
@@ -5402,7 +5419,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/render-with-transform:
@@ -5411,7 +5428,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/markdoc/test/fixtures/variables:
@@ -5420,7 +5437,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/mdx:
@@ -5434,6 +5451,9 @@ importers:
       acorn:
         specifier: ^8.15.0
         version: 8.15.0
+      astro:
+        specifier: link:../../astro
+        version: link:../../astro
       es-module-lexer:
         specifier: ^2.0.0
         version: 2.0.0
@@ -5474,9 +5494,6 @@ importers:
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
-      astro:
-        specifier: workspace:*
-        version: link:../../astro
       astro-scripts:
         specifier: workspace:*
         version: link:../../../scripts
@@ -5526,7 +5543,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       astro-remote:
         specifier: 0.3.4
@@ -5538,7 +5555,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/mdx/test/fixtures/mdx-frontmatter-injection:
@@ -5547,7 +5564,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       mdast-util-to-string:
         specifier: ^4.0.0
@@ -5565,7 +5582,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       react:
         specifier: ^18.3.1
@@ -5583,7 +5600,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../preact
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       preact:
         specifier: ^10.28.3
@@ -5598,7 +5615,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../react
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       react:
         specifier: ^18.3.1
@@ -5613,7 +5630,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/mdx/test/fixtures/mdx-page:
@@ -5622,7 +5639,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       react:
         specifier: ^18.3.1
@@ -5640,7 +5657,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../react
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       react:
         specifier: ^18.3.1
@@ -5658,7 +5675,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../react
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       react:
         specifier: ^18.3.1
@@ -5673,7 +5690,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/netlify:
@@ -5696,6 +5713,9 @@ importers:
       '@vercel/nft':
         specifier: ^1.3.0
         version: 1.3.0(rollup@4.57.1)
+      astro:
+        specifier: link:../../astro
+        version: link:../../astro
       esbuild:
         specifier: ^0.25.0
         version: 0.25.5
@@ -5709,9 +5729,6 @@ importers:
       '@types/node':
         specifier: ^22.10.6
         version: 22.19.8
-      astro:
-        specifier: workspace:*
-        version: link:../../astro
       astro-scripts:
         specifier: workspace:*
         version: link:../../../scripts
@@ -5731,7 +5748,7 @@ importers:
         specifier: 'workspace:'
         version: link:../../../..
       astro:
-        specifier: 'workspace:'
+        specifier: link:../../../../../../astro
         version: link:../../../../../../astro
       sharp:
         specifier: ^0.34.3
@@ -5774,7 +5791,7 @@ importers:
         version: link:../../../..
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../../astro
         version: link:../../../../../../astro
 
   packages/integrations/netlify/test/functions/fixtures/skew-protection:
@@ -5783,7 +5800,7 @@ importers:
         specifier: 'workspace:'
         version: link:../../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../../astro
         version: link:../../../../../../astro
 
   packages/integrations/netlify/test/hosted/hosted-astro-project:
@@ -5792,7 +5809,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/netlify/test/static/fixtures/redirects:
@@ -5812,6 +5829,9 @@ importers:
       '@astrojs/internal-helpers':
         specifier: workspace:*
         version: link:../../internal-helpers
+      astro:
+        specifier: link:../../astro
+        version: link:../../astro
       send:
         specifier: ^1.2.1
         version: 1.2.1
@@ -5834,9 +5854,6 @@ importers:
       '@types/server-destroy':
         specifier: ^1.0.4
         version: 1.0.4
-      astro:
-        specifier: workspace:*
-        version: link:../../astro
       astro-scripts:
         specifier: workspace:*
         version: link:../../../scripts
@@ -5859,55 +5876,55 @@ importers:
   packages/integrations/node/test/fixtures/api-route:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/bad-urls:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/encoded:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/errors:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/headers:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/image:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       sharp:
         specifier: ^0.34.3
@@ -5916,109 +5933,109 @@ importers:
   packages/integrations/node/test/fixtures/locals:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/node-middleware:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/prerender:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/prerender-404-500:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/prerender-error-page:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/preview-headers:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/redirects:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/sessions:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/static-headers:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/trailing-slash:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/url:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/node/test/fixtures/well-known-locations:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../..
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/partytown:
@@ -6031,7 +6048,7 @@ importers:
         version: 2.0.1
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../astro
         version: link:../../astro
       astro-scripts:
         specifier: workspace:*
@@ -6053,7 +6070,7 @@ importers:
         version: 7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2)
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../astro
         version: link:../../astro
       astro-scripts:
         specifier: workspace:*
@@ -6081,7 +6098,7 @@ importers:
         specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.28)
       astro:
-        specifier: workspace:*
+        specifier: link:../../astro
         version: link:../../astro
       astro-scripts:
         specifier: workspace:*
@@ -6105,7 +6122,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       react:
         specifier: ^18.3.1
@@ -6130,7 +6147,7 @@ importers:
         version: 4.3.6
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../astro
         version: link:../../astro
       astro-scripts:
         specifier: workspace:*
@@ -6145,7 +6162,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/sitemap/test/fixtures/dynamic:
@@ -6154,19 +6171,19 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/sitemap/test/fixtures/ssr:
     dependencies:
       '@astrojs/node':
-        specifier: workspace:*
+        specifier: link:../../../../node
         version: link:../../../../node
       '@astrojs/sitemap':
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/sitemap/test/fixtures/static:
@@ -6175,7 +6192,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/sitemap/test/fixtures/trailing-slash:
@@ -6184,7 +6201,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/solid:
@@ -6197,7 +6214,7 @@ importers:
         version: 2.11.10(solid-js@1.9.11)(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../astro
         version: link:../../astro
       astro-scripts:
         specifier: workspace:*
@@ -6211,6 +6228,9 @@ importers:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^6.2.4
         version: 6.2.4(svelte@5.50.0)(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))
+      astro:
+        specifier: link:../../astro
+        version: link:../../astro
       svelte2tsx:
         specifier: ^0.7.47
         version: 0.7.47(svelte@5.50.0)(typescript@5.9.3)
@@ -6218,9 +6238,6 @@ importers:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2)
     devDependencies:
-      astro:
-        specifier: workspace:*
-        version: link:../../astro
       astro-scripts:
         specifier: workspace:*
         version: link:../../../scripts
@@ -6237,7 +6254,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       svelte:
         specifier: 5.49.1
@@ -6249,7 +6266,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       svelte:
         specifier: 5.49.1
@@ -6261,7 +6278,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       svelte:
         specifier: ^5.49.1
@@ -6284,6 +6301,9 @@ importers:
       '@vercel/routing-utils':
         specifier: ^5.3.2
         version: 5.3.2
+      astro:
+        specifier: link:../../astro
+        version: link:../../astro
       esbuild:
         specifier: ^0.25.0
         version: 0.25.5
@@ -6291,9 +6311,6 @@ importers:
         specifier: ^0.2.15
         version: 0.2.15
     devDependencies:
-      astro:
-        specifier: workspace:*
-        version: link:../../astro
       astro-scripts:
         specifier: workspace:*
         version: link:../../../scripts
@@ -6310,7 +6327,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/image:
@@ -6319,7 +6336,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/integration-assets:
@@ -6331,7 +6348,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/isr:
@@ -6340,7 +6357,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/max-duration:
@@ -6349,7 +6366,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/middleware-with-edge-file:
@@ -6358,7 +6375,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/middleware-without-edge-file:
@@ -6367,7 +6384,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/no-output:
@@ -6376,7 +6393,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/prerendered-error-pages:
@@ -6385,7 +6402,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/redirects:
@@ -6394,7 +6411,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/redirects-serverless:
@@ -6403,7 +6420,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/server-islands:
@@ -6412,7 +6429,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/serverless-prerender:
@@ -6421,7 +6438,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/serverless-with-dynamic-routes:
@@ -6430,7 +6447,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/static:
@@ -6439,7 +6456,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/static-assets:
@@ -6448,7 +6465,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/static-headers:
@@ -6457,7 +6474,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/streaming:
@@ -6466,7 +6483,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vercel/test/fixtures/with-web-analytics-enabled/output-as-static:
@@ -6475,7 +6492,7 @@ importers:
         specifier: workspace:*
         version: link:../../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../../astro
         version: link:../../../../../../astro
 
   packages/integrations/vercel/test/hosted/hosted-astro-project:
@@ -6484,7 +6501,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vue:
@@ -6498,6 +6515,9 @@ importers:
       '@vue/compiler-sfc':
         specifier: ^3.5.27
         version: 3.5.27
+      astro:
+        specifier: link:../../astro
+        version: link:../../astro
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2)
@@ -6505,9 +6525,6 @@ importers:
         specifier: ^8.0.5
         version: 8.0.6(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.97.3)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3))
     devDependencies:
-      astro:
-        specifier: workspace:*
-        version: link:../../astro
       astro-scripts:
         specifier: workspace:*
         version: link:../../../scripts
@@ -6527,7 +6544,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       vite-svg-loader:
         specifier: 5.1.0
@@ -6542,7 +6559,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       vite-svg-loader:
         specifier: 5.1.0
@@ -6557,7 +6574,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vue/test/fixtures/app-entrypoint-no-export-default:
@@ -6566,7 +6583,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       vite-svg-loader:
         specifier: 5.1.0
@@ -6581,7 +6598,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vue/test/fixtures/app-entrypoint-src-absolute:
@@ -6590,7 +6607,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vue/test/fixtures/basics:
@@ -6599,7 +6616,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
 
   packages/integrations/vue/test/fixtures/prop-types:
@@ -6608,7 +6625,7 @@ importers:
         specifier: workspace:*
         version: link:../../..
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../../astro
         version: link:../../../../../astro
       vue:
         specifier: ^3.5.27
@@ -6742,7 +6759,7 @@ importers:
         specifier: workspace:*
         version: link:../../../integrations/vue
       astro:
-        specifier: workspace:*
+        specifier: link:../../../astro
         version: link:../../../astro
       svelte:
         specifier: ^5.49.1
@@ -6755,7 +6772,7 @@ importers:
   packages/language-tools/language-server/test/fixture:
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../../../../astro
         version: link:../../../../astro
 
   packages/language-tools/ts-plugin:
@@ -7018,7 +7035,7 @@ importers:
   packages/underscore-redirects:
     devDependencies:
       astro:
-        specifier: workspace:*
+        specifier: link:../astro
         version: link:../astro
       astro-scripts:
         specifier: workspace:*
@@ -7066,6 +7083,19 @@ importers:
       tsconfck:
         specifier: ^3.1.6
         version: 3.1.6(typescript@5.9.3)
+
+  triage/gh-15098-fresh:
+    dependencies:
+      '@astrojs/node':
+        specifier: link:../../packages/integrations/node
+        version: link:../../packages/integrations/node
+      astro:
+        specifier: link:../../packages/astro
+        version: link:../../packages/astro
+    devDependencies:
+      tsx:
+        specifier: ^4.21.0
+        version: 4.21.0
 
 packages:
 
@@ -7122,9 +7152,6 @@ packages:
   '@astrojs/compiler@3.0.0-beta.0':
     resolution: {integrity: sha512-wrWArjuyeEhoUZUr+o3Ts3CFbxB+QFYvzsnnR0wr3L0b84JDxq107mZOfmNZ/XPE4VjFzjjApvHKCVGQjNJm8Q==}
 
-  '@astrojs/internal-helpers@0.7.1':
-    resolution: {integrity: sha512-7dwEVigz9vUWDw3nRwLQ/yH/xYovlUA0ZD86xoeKEBmkz9O6iELG1yri67PgAPW6VLL/xInA4t7H0CK6VmtkKQ==}
-
   '@astrojs/internal-helpers@0.7.5':
     resolution: {integrity: sha512-vreGnYSSKhAjFJCWAwe/CNhONvoc5lokxtRoZims+0wa3KbHBdPHSSthJsKxPd8d/aic6lWKpRTYGY/hsgK6EA==}
 
@@ -7148,11 +7175,6 @@ packages:
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0}
     peerDependencies:
       astro: ^5.0.0
-
-  '@astrojs/node@9.4.1':
-    resolution: {integrity: sha512-lpSAQFS4IiCFGQHL/q/1CcX+AmFbma4NOoV5j7Z7Ml2wevyDe/2kAjScKIKk2DA7k/MrXSZ5ZN+IxJgpPbnAOQ==}
-    peerDependencies:
-      astro: ^5.3.0
 
   '@astrojs/prism@3.3.0':
     resolution: {integrity: sha512-q8VwfU/fDZNoDOf+r7jUnMC2//H2l0TuQ6FkGJL8vD8nw/q5KiL3DS1KKBI3QhI9UQhpJ5dc7AtqfbXWuOgLCQ==}
@@ -8782,6 +8804,9 @@ packages:
   '@fastify/static@9.0.0':
     resolution: {integrity: sha512-r64H8Woe/vfilg5RTy7lwWlE8ZZcTrc3kebYFMEUBrMqlydhQyoiExQXdYAy2REVpST/G35+stAM8WYp1WGmMA==}
 
+  '@flue/client@0.0.1':
+    resolution: {integrity: sha512-3RqGqWzyAF46vFTjSssTvNALcB1zcVg43V/jGYUCnfI12mtsXKosXCCma1DEOmut5D1dpPDmTqo/E/eD9GnwAA==}
+
   '@fontsource/monofett@5.2.8':
     resolution: {integrity: sha512-cUtT8ScH3HHsMBkRrXFCrhGpKqRrKVNOhnYVSusECfB7g13YZjOrrLlhlc3o+R2IYpRrQQg/T/febSVD6k2Dhw==}
 
@@ -9347,6 +9372,9 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@opencode-ai/sdk@1.1.55':
+    resolution: {integrity: sha512-erP+vjM26sJeezms+EZl8sdk6aIV2WTzC4dVJCBPjio1p1bcq5srhkRNEdu/uQbm9LkNSHy9L1xiO+vc8uYzFA==}
 
   '@opentelemetry/api-logs@0.203.0':
     resolution: {integrity: sha512-9B9RU0H7Ya1Dx/Rkyc4stuBZSGVQF27WigitInx2QQoj6KUpEFYPKoWjdFTunJYxmXmh17HeBvbMa1EhGyPmqQ==}
@@ -10352,6 +10380,11 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+
+  '@valibot/to-json-schema@1.5.0':
+    resolution: {integrity: sha512-GE7DmSr1C2UCWPiV0upRH6mv0cCPsqYGs819fb6srCS1tWhyXrkGGe+zxUiwzn/L1BOfADH4sNjY/YHCuP8phQ==}
+    peerDependencies:
+      valibot: ^1.2.0
 
   '@vercel/analytics@1.6.1':
     resolution: {integrity: sha512-oH9He/bEM+6oKlv3chWuOOcp8Y6fo6/PSro8hEkgCW3pu9/OiCXiUpRUogDh3Fs3LH2sosDrx8CxeOLBEE+afg==}
@@ -15639,6 +15672,14 @@ packages:
     resolution: {integrity: sha512-kiGUalWN+rgBJ/1OHZsBtU4rXZOfj/7rKQxULKlIzwzQSvMJUUNgPwJEEh7gU6xEVxC0ahoOBvN2YI8GH6FNgA==}
     engines: {node: '>=10.12.0'}
 
+  valibot@1.2.0:
+    resolution: {integrity: sha512-mm1rxUsmOxzrwnX5arGS+U4T25RdvpPjPN4yR0u9pUBov9+zGVtO84tif1eY4r6zWxVxu3KzIyknJy3rxfRZZg==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
@@ -16421,8 +16462,6 @@ snapshots:
 
   '@astrojs/compiler@3.0.0-beta.0': {}
 
-  '@astrojs/internal-helpers@0.7.1': {}
-
   '@astrojs/internal-helpers@0.7.5': {}
 
   '@astrojs/language-server@2.16.2(prettier-plugin-astro@0.14.1)(prettier@3.8.1)(typescript@5.9.3)':
@@ -16493,15 +16532,6 @@ snapshots:
       source-map: 0.7.6
       unist-util-visit: 5.1.0
       vfile: 6.0.3
-    transitivePeerDependencies:
-      - supports-color
-
-  '@astrojs/node@9.4.1(astro@packages+astro)':
-    dependencies:
-      '@astrojs/internal-helpers': 0.7.1
-      astro: link:packages/astro
-      send: 1.2.1
-      server-destroy: 1.0.1
     transitivePeerDependencies:
       - supports-color
 
@@ -18016,6 +18046,14 @@ snapshots:
       fastq: 1.19.1
       glob: 13.0.1
 
+  '@flue/client@0.0.1(typescript@5.9.3)':
+    dependencies:
+      '@opencode-ai/sdk': 1.1.55
+      '@valibot/to-json-schema': 1.5.0(valibot@1.2.0(typescript@5.9.3))
+      valibot: 1.2.0(typescript@5.9.3)
+    transitivePeerDependencies:
+      - typescript
+
   '@fontsource/monofett@5.2.8': {}
 
   '@fontsource/montserrat@5.2.8': {}
@@ -18750,6 +18788,8 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  '@opencode-ai/sdk@1.1.55': {}
 
   '@opentelemetry/api-logs@0.203.0':
     dependencies:
@@ -19691,6 +19731,10 @@ snapshots:
       - supports-color
 
   '@ungap/structured-clone@1.3.0': {}
+
+  '@valibot/to-json-schema@1.5.0(valibot@1.2.0(typescript@5.9.3))':
+    dependencies:
+      valibot: 1.2.0(typescript@5.9.3)
 
   '@vercel/analytics@1.6.1(react@19.2.4)(svelte@5.50.0)(vue@3.5.27(typescript@5.9.3))':
     optionalDependencies:
@@ -25937,6 +25981,10 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.31
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
+
+  valibot@1.2.0(typescript@5.9.3):
+    optionalDependencies:
+      typescript: 5.9.3
 
   validate-npm-package-license@3.0.4:
     dependencies:
