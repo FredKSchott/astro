@@ -198,7 +198,10 @@ export function verifyOptions(options: ImageTransform): void {
 			throw new AstroError(AstroErrorData.IncompatibleDescriptorOptions);
 		}
 
-		if (options.src.format !== 'svg' && options.format === 'svg') {
+		if (
+			(options.src.format === 'svg' && options.format !== 'svg') ||
+			(options.src.format !== 'svg' && options.format === 'svg')
+		) {
 			throw new AstroError(AstroErrorData.UnsupportedImageConversion);
 		}
 	}
@@ -226,16 +229,17 @@ export function verifyOptions(options: ImageTransform): void {
 export const baseService: Omit<LocalImageService, 'transform'> = {
 	propertiesToHash: DEFAULT_HASH_PROPS,
 	validateOptions(options) {
+		// We currently do not support processing SVGs, so whenever the input format is a SVG, force the output to also be one
+		if (isESMImportedImage(options.src) && options.src.format === 'svg') {
+			options.format = 'svg';
+		}
+
 		// Run verification-only checks
 		verifyOptions(options);
 
 		// Apply defaults and normalization separate from verification
 		if (!options.format) {
-			if (isESMImportedImage(options.src) && options.src.format === 'svg') {
-				options.format = 'svg';
-			} else {
-				options.format = DEFAULT_OUTPUT_FORMAT;
-			}
+			options.format = DEFAULT_OUTPUT_FORMAT;
 		}
 		if (options.width) options.width = Math.round(options.width);
 		if (options.height) options.height = Math.round(options.height);

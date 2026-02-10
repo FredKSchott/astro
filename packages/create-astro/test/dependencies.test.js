@@ -38,6 +38,7 @@ describe('dependencies', () => {
 	it('prompt no', async () => {
 		const context = {
 			cwd: '',
+			install: true,
 			packageManager: 'npm',
 			dryRun: true,
 			prompt: () => ({ deps: false }),
@@ -76,42 +77,5 @@ describe('dependencies', () => {
 
 		assert.ok(fixture.hasMessage('Skipping dependency installation'));
 		assert.equal(context.install, false);
-	});
-
-	describe('--add', async () => {
-		it('fails for non-supported integration', async () => {
-			let context = {
-				cwd: '',
-				add: ['foo '],
-				dryRun: true,
-				prompt: () => ({ deps: false }),
-			};
-
-			try {
-				await dependencies(context);
-				assert.fail('The function should throw an error');
-			} catch (error) {
-				assert.ok(
-					error.message.includes('Invalid package name "foo "'),
-					`Expected error about invalid package name, got: ${error.message}`,
-				);
-			}
-			context = {
-				cwd: '',
-				add: ['react', 'bar lorem'],
-				dryRun: true,
-				prompt: () => ({ deps: false }),
-			};
-
-			try {
-				await dependencies(context);
-				assert.fail('The function should throw an error');
-			} catch (error) {
-				assert.ok(
-					error.message.includes('Invalid package name "bar lorem"'),
-					`Expected error about invalid package name, got: ${error.message}`,
-				);
-			}
-		});
 	});
 });

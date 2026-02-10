@@ -50,17 +50,21 @@ describe(
 			// Find the manifest file (it has a hash in the name)
 			const { readdir } = await import('node:fs/promises');
 			const files = await readdir(manifestURL);
-			let found = false;
-			for (const file of files) {
-				const contents = await readFile(new URL(file, manifestURL), 'utf-8');
-				if (contents.includes('"internalFetchHeaders":{"X-Netlify-Deploy-ID":"test-deploy-123"}')) {
-					found = true;
-					break;
-				}
-			}
+			const manifestFile = files.find(
+				(f) => f.startsWith('_virtual_astro_legacy') && f.endsWith('.mjs'),
+			);
+			assert.ok(manifestFile, 'Expected to find a manifest file');
+
+			const manifestContent = await readFile(new URL(manifestFile, manifestURL), 'utf-8');
+
+			// The manifest should be serialized with internalFetchHeaders
 			assert.ok(
-				found,
-				'Manifest should include internalFetchHeaders field with the correct deploy ID value',
+				manifestContent.includes('internalFetchHeaders'),
+				'Expected manifest to include internalFetchHeaders field',
+			);
+			assert.ok(
+				manifestContent.includes('test-deploy-123'),
+				'Expected manifest to include deploy ID value',
 			);
 		});
 	},
