@@ -25,8 +25,8 @@ importers:
         specifier: ^2.29.8
         version: 2.29.8(@types/node@18.19.130)
       '@flue/client':
-        specifier: ^0.0.1
-        version: 0.0.1(typescript@5.9.3)
+        specifier: ^0.0.2
+        version: 0.0.2(typescript@5.9.3)
       '@types/node':
         specifier: ^18.19.115
         version: 18.19.130
@@ -8810,8 +8810,8 @@ packages:
   '@fastify/static@9.0.0':
     resolution: {integrity: sha512-r64H8Woe/vfilg5RTy7lwWlE8ZZcTrc3kebYFMEUBrMqlydhQyoiExQXdYAy2REVpST/G35+stAM8WYp1WGmMA==}
 
-  '@flue/client@0.0.1':
-    resolution: {integrity: sha512-3RqGqWzyAF46vFTjSssTvNALcB1zcVg43V/jGYUCnfI12mtsXKosXCCma1DEOmut5D1dpPDmTqo/E/eD9GnwAA==}
+  '@flue/client@0.0.2':
+    resolution: {integrity: sha512-FCpdvAN4xe9hYwcOrZQbTiFWW/Pc0HzZXEfGTwCeUjwCKZtgsy8Axn3r/F0bRmCL/L4o7XR0lB2Pqz20Roc1aA==}
 
   '@fontsource/monofett@5.2.8':
     resolution: {integrity: sha512-cUtT8ScH3HHsMBkRrXFCrhGpKqRrKVNOhnYVSusECfB7g13YZjOrrLlhlc3o+R2IYpRrQQg/T/febSVD6k2Dhw==}
@@ -18115,7 +18115,7 @@ snapshots:
       fastq: 1.19.1
       glob: 13.0.1
 
-  '@flue/client@0.0.1(typescript@5.9.3)':
+  '@flue/client@0.0.2(typescript@5.9.3)':
     dependencies:
       '@opencode-ai/sdk': 1.1.55
       '@valibot/to-json-schema': 1.5.0(valibot@1.2.0(typescript@5.9.3))
