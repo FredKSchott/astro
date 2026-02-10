@@ -41,4 +41,5 @@ jobs:
         run: |
           pnpm dlx @flue/cli@latest run .flue/workflows/triage.ts \
             --args "{\"issueNumber\": $ISSUE_NUMBER}" \
-            --branch "flue/fix-$ISSUE_NUMBER"
+            --branch "flue/fix-$ISSUE_NUMBER" \
+            --model anthropic/claude-sonnet-4-5
