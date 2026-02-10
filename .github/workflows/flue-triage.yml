@@ -3,9 +3,19 @@ name: Flue Triage
 on:
   issues:
     types: [opened]
+  issue_comment:
+    types: [created]
 
 jobs:
   triage:
+    if: >-
+      (github.event.action == 'opened') ||
+      (github.event.action == 'created' &&
+       !github.event.issue.pull_request &&
+       contains(github.event.issue.labels.*.name, 'needs triage') &&
+       contains(github.event.issue.assignees.*.login, 'astrobot-houston') &&
+       github.event.comment.user.login != 'astrobot-houston' &&
+       github.event.comment.user.login != 'github-actions[bot]')
     runs-on: ubuntu-latest
     timeout-minutes: 120
     permissions:

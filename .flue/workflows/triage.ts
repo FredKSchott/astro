@@ -30,16 +30,58 @@ export default async function triage(flue: Flue) {
 		issueNumber: number;
 	};
 
-	const issueJson = await flue.shell(`gh issue view ${issueNumber} --json title,body`, {
+	// Fetch issue with full comment thread
+	const issueJson = await flue.shell(`gh issue view ${issueNumber} --json title,body,comments`, {
 		env: { GH_TOKEN: flue.secrets.GITHUB_TOKEN },
 	});
 	const issue = JSON.parse(issueJson.stdout) as {
 		title: string;
 		body: string;
+		comments: Array<{ author: { login: string }; body: string }>;
 	};
 
+	// If there are prior comments, this is a re-triage. Check whether new
+	// actionable information has been provided before running the full pipeline.
+	const hasExistingConversation = issue.comments.length > 0;
+	if (hasExistingConversation) {
+		const shouldRetriage = await flue.prompt(
+			`You are reviewing a GitHub issue conversation to decide whether a triage re-run is warranted.
+
+## Issue
+**${issue.title}**
+
+${issue.body}
+
+## Conversation
+${issue.comments.map((c) => `**@${c.author.login}:**\n${c.body}`).join('\n\n---\n\n')}
+
+## Your Task
+Look at the messages since the last comment from astrobot-houston (or github-actions[bot]).
+Consider comments from the original poster, maintainers, or other users who may have provided:
+- New reproduction steps or environment details
+- Corrections to a previously attempted reproduction
+- Additional context about when/how the bug occurs
+- Different configurations or versions to try
+
+If there is new, actionable information that could lead to a different reproduction result
+than what was already attempted, respond with exactly "yes".
+If the new comments are just acknowledgments, thanks, unrelated discussion, or do not add
+meaningful reproduction information, respond with exactly "no".`,
+			{ result: v.picklist(['yes', 'no']) },
+		);
+
+		if (shouldRetriage === 'no') {
+			return { skipped: true, reason: 'No new actionable information' };
+		}
+	}
+
+	// Run the triage pipeline: reproduce → diagnose → fix
 	const reproduceResult = await flue.skill('triage/reproduce.md', {
-		args: { issueTitle: issue.title, issueBody: issue.body },
+		args: {
+			issueTitle: issue.title,
+			issueBody: issue.body,
+			issueComments: issue.comments,
+		},
 		result: reproductionResultSchema,
 	});
 
@@ -57,6 +99,7 @@ export default async function triage(flue: Flue) {
 		isPushed = pushResult.exitCode === 0;
 	}
 
+	// Generate and post the triage comment
 	const branchName = isPushed ? flue.branch : null;
 	const comment = await flue.skill('triage/comment.md', {
 		args: { branchName },
@@ -67,6 +110,17 @@ export default async function triage(flue: Flue) {
 		stdin: comment,
 		env: { GH_TOKEN: flue.secrets.GITHUB_TOKEN },
 	});
+
+	// Manage labels based on triage outcome
+	if (reproduceResult.reproducible) {
+		// Success: remove label and unassign Houston — exits the loop
+		await flue.shell(
+			`gh issue edit ${issueNumber} --remove-label "needs triage" --remove-assignee "astrobot-houston"`,
+			{ env: { GH_TOKEN: flue.secrets.GITHUB_TOKEN } },
+		);
+	}
+	// If not reproducible: "needs triage" label stays, Houston stays assigned.
+	// The loop continues when the author (or another user) replies.
 
 	return { reproduceResult, diagnoseResult, fixResult, isPushed };
 }
