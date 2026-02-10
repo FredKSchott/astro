@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@astrojs/node':
+        specifier: link:packages/integrations/node
+        version: link:packages/integrations/node
+      astro:
+        specifier: link:packages/astro
+        version: link:packages/astro
       astro-benchmark:
         specifier: workspace:*
         version: link:benchmark
@@ -24,6 +30,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.29.8
         version: 2.29.8(@types/node@18.19.130)
+      '@flue/client':
+        specifier: ^0.0.1
+        version: 0.0.1(typescript@5.9.3)
       '@types/node':
         specifier: ^18.19.115
         version: 18.19.130
@@ -55,7 +64,7 @@ importers:
         specifier: ^0.2.15
         version: 0.2.15
       turbo:
-        specifier: ^2.8.3
+        specifier: ^2.8.1
         version: 2.8.3
       typescript:
         specifier: ~5.9.3
@@ -63,6 +72,9 @@ importers:
       typescript-eslint:
         specifier: ^8.54.0
         version: 8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      valibot:
+        specifier: ^1.0.0
+        version: 1.2.0(typescript@5.9.3)
 
   benchmark:
     dependencies:
@@ -8782,6 +8794,9 @@ packages:
   '@fastify/static@9.0.0':
     resolution: {integrity: sha512-r64H8Woe/vfilg5RTy7lwWlE8ZZcTrc3kebYFMEUBrMqlydhQyoiExQXdYAy2REVpST/G35+stAM8WYp1WGmMA==}
 
+  '@flue/client@0.0.1':
+    resolution: {integrity: sha512-3RqGqWzyAF46vFTjSssTvNALcB1zcVg43V/jGYUCnfI12mtsXKosXCCma1DEOmut5D1dpPDmTqo/E/eD9GnwAA==}
+
   '@fontsource/monofett@5.2.8':
     resolution: {integrity: sha512-cUtT8ScH3HHsMBkRrXFCrhGpKqRrKVNOhnYVSusECfB7g13YZjOrrLlhlc3o+R2IYpRrQQg/T/febSVD6k2Dhw==}
 
@@ -9347,6 +9362,9 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@opencode-ai/sdk@1.1.55':
+    resolution: {integrity: sha512-erP+vjM26sJeezms+EZl8sdk6aIV2WTzC4dVJCBPjio1p1bcq5srhkRNEdu/uQbm9LkNSHy9L1xiO+vc8uYzFA==}
 
   '@opentelemetry/api-logs@0.203.0':
     resolution: {integrity: sha512-9B9RU0H7Ya1Dx/Rkyc4stuBZSGVQF27WigitInx2QQoj6KUpEFYPKoWjdFTunJYxmXmh17HeBvbMa1EhGyPmqQ==}
@@ -10352,6 +10370,11 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+
+  '@valibot/to-json-schema@1.5.0':
+    resolution: {integrity: sha512-GE7DmSr1C2UCWPiV0upRH6mv0cCPsqYGs819fb6srCS1tWhyXrkGGe+zxUiwzn/L1BOfADH4sNjY/YHCuP8phQ==}
+    peerDependencies:
+      valibot: ^1.2.0
 
   '@vercel/analytics@1.6.1':
     resolution: {integrity: sha512-oH9He/bEM+6oKlv3chWuOOcp8Y6fo6/PSro8hEkgCW3pu9/OiCXiUpRUogDh3Fs3LH2sosDrx8CxeOLBEE+afg==}
@@ -15639,6 +15662,14 @@ packages:
     resolution: {integrity: sha512-kiGUalWN+rgBJ/1OHZsBtU4rXZOfj/7rKQxULKlIzwzQSvMJUUNgPwJEEh7gU6xEVxC0ahoOBvN2YI8GH6FNgA==}
     engines: {node: '>=10.12.0'}
 
+  valibot@1.2.0:
+    resolution: {integrity: sha512-mm1rxUsmOxzrwnX5arGS+U4T25RdvpPjPN4yR0u9pUBov9+zGVtO84tif1eY4r6zWxVxu3KzIyknJy3rxfRZZg==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
@@ -18016,6 +18047,14 @@ snapshots:
       fastq: 1.19.1
       glob: 13.0.1
 
+  '@flue/client@0.0.1(typescript@5.9.3)':
+    dependencies:
+      '@opencode-ai/sdk': 1.1.55
+      '@valibot/to-json-schema': 1.5.0(valibot@1.2.0(typescript@5.9.3))
+      valibot: 1.2.0(typescript@5.9.3)
+    transitivePeerDependencies:
+      - typescript
+
   '@fontsource/monofett@5.2.8': {}
 
   '@fontsource/montserrat@5.2.8': {}
@@ -18750,6 +18789,8 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  '@opencode-ai/sdk@1.1.55': {}
 
   '@opentelemetry/api-logs@0.203.0':
     dependencies:
@@ -19691,6 +19732,10 @@ snapshots:
       - supports-color
 
   '@ungap/structured-clone@1.3.0': {}
+
+  '@valibot/to-json-schema@1.5.0(valibot@1.2.0(typescript@5.9.3))':
+    dependencies:
+      valibot: 1.2.0(typescript@5.9.3)
 
   '@vercel/analytics@1.6.1(react@19.2.4)(svelte@5.50.0)(vue@3.5.27(typescript@5.9.3))':
     optionalDependencies:
@@ -25937,6 +25982,10 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.31
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
+
+  valibot@1.2.0(typescript@5.9.3):
+    optionalDependencies:
+      typescript: 5.9.3
 
   validate-npm-package-license@3.0.4:
     dependencies:
