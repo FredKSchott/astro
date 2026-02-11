@@ -40,11 +40,34 @@ jobs:
           curl -fsSL https://opencode.ai/install | bash
           echo "/home/runner/.opencode/bin" >> $GITHUB_PATH
 
+      - name: Install agent-browser
+        run: npm install -g agent-browser
+
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm build
+
+      - name: Start Cloudflare Tunnel
+        run: |
+          curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared
+          chmod +x /usr/local/bin/cloudflared
+          cloudflared tunnel --url http://localhost:48765 --no-autoupdate 2>&1 | tee /tmp/cloudflared.log &
+          # Wait for tunnel URL to appear
+          for i in $(seq 1 30); do
+            if grep -qo 'https://[^ ]*\.trycloudflare\.com' /tmp/cloudflared.log; then
+              break
+            fi
+            sleep 1
+          done
+          echo "=========================================="
+          echo "TUNNEL URL:"
+          grep -o 'https://[^ ]*\.trycloudflare\.com' /tmp/cloudflared.log || echo "WARNING: tunnel URL not found"
+          echo "=========================================="
+          echo ""
+          echo "To attach from your machine:"
+          echo "  OPENCODE_API_URL=\$(grep -o 'https://[^ ]*\\.trycloudflare\\.com' /tmp/cloudflared.log) opencode attach"
 
       - name: Run workflow
         env:
