@@ -326,7 +326,7 @@ export function redirectToDefaultLocale({
 
 // NOTE: public function exported to the users via `astro:i18n` module
 export function notFound({ base, locales, fallback }: MiddlewarePayload) {
-	return function (context: APIContext, response?: Response): Response | undefined {
+	return async function (context: APIContext, response?: Response): Promise<Response | undefined> {
 		if (
 			response?.headers.get(REROUTE_DIRECTIVE_HEADER) === 'no' &&
 			typeof fallback === 'undefined'
@@ -340,20 +340,10 @@ export function notFound({ base, locales, fallback }: MiddlewarePayload) {
 		// - the URL doesn't contain a locale
 		const isRoot = url.pathname === base + '/' || url.pathname === base;
 		if (!(isRoot || pathHasLocale(url.pathname, locales))) {
-			if (response) {
-				response.headers.set(REROUTE_DIRECTIVE_HEADER, 'no');
-				return new Response(response.body, {
-					status: 404,
-					headers: response.headers,
-				});
-			} else {
-				return new Response(null, {
-					status: 404,
-					headers: {
-						[REROUTE_DIRECTIVE_HEADER]: 'no',
-					},
-				});
-			}
+			// When an invalid locale is detected, rewrite to /404 to render the proper 404 page
+			// instead of showing the matched [locale] route with invalid locale
+			const notFoundPath = joinPaths(base, '/404');
+			return await context.rewrite(notFoundPath);
 		}
 
 		return undefined;

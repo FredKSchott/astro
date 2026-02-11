@@ -286,7 +286,7 @@ if (i18n?.routing === 'manual') {
  * @param {Response?} response An optional `Response` in case you're handling a `Response` coming from the `next` function.
  *
  */
-export let notFound: (context: APIContext, response?: Response) => Response | undefined;
+export let notFound: (context: APIContext, response?: Response) => Promise<Response | undefined>;
 
 if (i18n?.routing === 'manual') {
 	notFound = I18nInternals.notFound({

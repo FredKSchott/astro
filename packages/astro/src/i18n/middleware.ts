@@ -31,7 +31,10 @@ export function createI18nMiddleware(
 	const _requestHasLocale = requestHasLocale(payload.locales);
 	const _redirectToFallback = redirectToFallback(payload);
 
-	const prefixAlways = (context: APIContext, response: Response): Response | undefined => {
+	const prefixAlways = async (
+		context: APIContext,
+		response: Response,
+	): Promise<Response | undefined> => {
 		const url = context.url;
 		if (url.pathname === base + '/' || url.pathname === base) {
 			return _redirectToDefaultLocale(context);
@@ -39,13 +42,16 @@ export function createI18nMiddleware(
 
 		// Astro can't know where the default locale is supposed to be, so it returns a 404.
 		else if (!_requestHasLocale(context)) {
-			return _noFoundForNonLocaleRoute(context, response);
+			return await _noFoundForNonLocaleRoute(context, response);
 		}
 
 		return undefined;
 	};
 
-	const prefixOtherLocales = (context: APIContext, response: Response): Response | undefined => {
+	const prefixOtherLocales = async (
+		context: APIContext,
+		response: Response,
+	): Promise<Response | undefined> => {
 		let pathnameContainsDefaultLocale = false;
 		const url = context.url;
 		for (const segment of url.pathname.split('/')) {
@@ -57,7 +63,7 @@ export function createI18nMiddleware(
 		if (pathnameContainsDefaultLocale) {
 			const newLocation = url.pathname.replace(`/${i18n.defaultLocale}`, '');
 			response.headers.set('Location', newLocation);
-			return _noFoundForNonLocaleRoute(context);
+			return await _noFoundForNonLocaleRoute(context);
 		}
 
 		return undefined;
@@ -96,7 +102,7 @@ export function createI18nMiddleware(
 			}
 			case 'domains-prefix-other-locales': {
 				if (localeHasntDomain(i18n, currentLocale)) {
-					const result = prefixOtherLocales(context, response);
+					const result = await prefixOtherLocales(context, response);
 					if (result) {
 						return result;
 					}
@@ -104,7 +110,7 @@ export function createI18nMiddleware(
 				break;
 			}
 			case 'pathname-prefix-other-locales': {
-				const result = prefixOtherLocales(context, response);
+				const result = await prefixOtherLocales(context, response);
 				if (result) {
 					return result;
 				}
@@ -113,7 +119,7 @@ export function createI18nMiddleware(
 
 			case 'domains-prefix-always-no-redirect': {
 				if (localeHasntDomain(i18n, currentLocale)) {
-					const result = _noFoundForNonLocaleRoute(context, response);
+					const result = await _noFoundForNonLocaleRoute(context, response);
 					if (result) {
 						return result;
 					}
@@ -122,7 +128,7 @@ export function createI18nMiddleware(
 			}
 
 			case 'pathname-prefix-always-no-redirect': {
-				const result = _noFoundForNonLocaleRoute(context, response);
+				const result = await _noFoundForNonLocaleRoute(context, response);
 				if (result) {
 					return result;
 				}
@@ -130,7 +136,7 @@ export function createI18nMiddleware(
 			}
 
 			case 'pathname-prefix-always': {
-				const result = prefixAlways(context, response);
+				const result = await prefixAlways(context, response);
 				if (result) {
 					return result;
 				}
@@ -138,7 +144,7 @@ export function createI18nMiddleware(
 			}
 			case 'domains-prefix-always': {
 				if (localeHasntDomain(i18n, currentLocale)) {
-					const result = prefixAlways(context, response);
+					const result = await prefixAlways(context, response);
 					if (result) {
 						return result;
 					}
