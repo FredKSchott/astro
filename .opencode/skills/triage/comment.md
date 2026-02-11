@@ -61,10 +61,13 @@ Format requirements:
 *This report was made by an LLM. Mistakes happen, check important info.*
 ```
 
-## Step 3 -- ONLY IF THE USER ASKED YOU TO DO THIS!
+## Optional Follow-up Task
+
+
+You MAY SUGGEST to the user, as a potential follow-up step, to post the issue to GitHub directly. However you CANNOT DO THIS STEP unless the user explicitly asks.
+
 
 ```bash
 gh issue comment <issue_number> --body <comment>
+gh issue comment <issue_number> --body-file <path-to-file>
 ```
-
-You are only allowed to post the comment directly to GitHub ONLY if the user already specifically asked you to. Otherwise, you can SUGGEST this to the user, as a potential follow-up step, but only if you think it would be helpful given the context.
