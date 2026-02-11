@@ -68,17 +68,9 @@ console.log('[DEBUG] Props:', JSON.stringify(props, null, 2));
 ```
 
 After adding logs:
-1. Rebuild the package:
-   ```bash
-   cd packages/astro  # or the relevant package
-   pnpm build
-   ```
-2. Re-run the reproduction:
-   ```bash
-   cd <triageDir>
-   pnpm run build
-   ```
-3. Observe the debug output
+1. Rebuild the package (Example: `pnpm -C packages/astro build`)
+2. Re-run the reproduction (Example: `pnpm -C <triageDir> build|dev|preview`)
+3. Observe the debug output.
 
 Iterate until you understand:
 - What code path is executing

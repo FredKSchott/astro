@@ -1,6 +1,6 @@
 # Notes for Agents
 
-- Always run `astro dev` and `astro preview` in the background to prevent hanging your entire session. Use `&` to run them in the background, and terminate them once you've completed your work.
+- Always run `astro dev` and `astro preview` in the background to prevent hanging your entire session. Use `&` to run them in the background. 
 - Always use `timeout` to wrap commands that can hang, like `curl`, to prevent hanging your entire session.
 - Use `agent-browser` for web automation. Run `agent-browser --help` for all commands. Core workflow:
   - `agent-browser open <url>` - Navigate to page
@@ -19,10 +19,10 @@
 
 - Run `pnpm test` in workspace root or package directory to run full test suite (can be slow!)
 - Integration tests live in special `packages/integrations` folders.
-- `cd` into the desired package directory, then use `pnpm astro-scripts` test runner
-- Run a single test file: ` pnpm astro-scripts test "test/actions.test.js"`
-- Run specific tests matching a string or regex patterns: `pnpm astro-scripts test "test/**/*.test.js" --match "CSS"`
-- Run multiple test files: `pnpm astro-scripts test "test/{actions,css,middleware}.test.js"`
+- Use `pnpm -C <package-directory> astro-scripts test` to run package test suite
+- Run a single test file: ` pnpm -C <package-directory> astro-scripts test "test/actions.test.js"`
+- Run specific tests matching a string or regex patterns: `pnpm -C <package-directory> astro-scripts test "test/**/*.test.js" --match "CSS"`
+- Run multiple test files: `pnpm -C <package-directory> astro-scripts test "test/{actions,css,middleware}.test.js"`
 - Key flags:
   - `--match` / `-m`: Filter tests by name pattern (regex)
   - `--only` / `-o`: Run only tests marked with `.only`
