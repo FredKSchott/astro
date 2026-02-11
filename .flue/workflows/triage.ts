@@ -23,6 +23,12 @@ const diagnoseResultSchema = v.object({
 
 const fixResultSchema = v.object({
 	fixed: v.pipe(v.boolean(), v.description('true if the bug was successfully fixed and verified')),
+	commitMessage: v.pipe(
+		v.nullable(v.string()),
+		v.description(
+			'A short commit message describing the fix, e.g. "fix(auto-triage): prevent crash when rendering client:only components". null if not fixed.',
+		),
+	),
 });
 
 export default async function triage(flue: Flue) {
@@ -95,7 +101,15 @@ meaningful reproduction information, respond with exactly "no".`,
 
 	let isPushed = false;
 	if (fixResult.fixed) {
-		const pushResult = await flue.shell(`git push origin HEAD:${flue.branch}`);
+		// Check for uncommitted changes and commit them
+		const status = await flue.shell('git status --porcelain');
+		if (status.stdout.trim()) {
+			await flue.shell('git add -A');
+			await flue.shell(
+				`git commit -m ${JSON.stringify(fixResult.commitMessage ?? 'fix(auto-triage): automated fix')}`,
+			);
+		}
+		const pushResult = await flue.shell(`git push origin HEAD:refs/heads/${flue.branch}`);
 		isPushed = pushResult.exitCode === 0;
 	}
 
@@ -103,7 +117,12 @@ meaningful reproduction information, respond with exactly "no".`,
 	const branchName = isPushed ? flue.branch : null;
 	const comment = await flue.skill('triage/comment.md', {
 		args: { branchName },
-		result: v.pipe(v.string(), v.description('Use the included "Step 2: Generate Comment > Template" template to generate the comment here, as the "result" return value. Follow the template EXACTLY.')),
+		result: v.pipe(
+			v.string(),
+			v.description(
+				'Use the included "Step 2: Generate Comment > Template" template to generate the comment here, as the "result" return value. Follow the template EXACTLY.',
+			),
+		),
 	});
 
 	await flue.shell(`gh issue comment ${issueNumber} --body-file -`, {

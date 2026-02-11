@@ -118,12 +118,16 @@ The report must include all information needed for a final GitHub comment to be 
 - Any alternative approaches considered and their tradeoffs
 - If the fix failed: what was tried and why it didn't work
 
-## Step 8: Commit Your Fix
+## Step 8: Clean Up the Working Directory
 
-Clean up and commit your changes:
+The orchestrator will commit and push whatever is in the working tree, so make sure it's clean.
 
-1. Review `git status` — revert any debug code, console.logs, or temp files that shouldn't ship
-2. Stage your changes: `git add -A` (the `triage/` directory is already gitignored)
-3. Commit with a conventional commit message, e.g.: `fix(astro): prevent crash when rendering client:only components`
+1. Run `git status` and review all changed files
+2. Revert any changes that are NOT part of the fix:
+   - Debug code, `console.log`s, or temporary test files
+   - Changes outside `packages/` that were only needed for diagnosis/reproduction
+   - Build artifacts that shouldn't be committed
+3. Use `git checkout -- <file>` to discard unwanted changes
+4. Confirm with a final `git status` that only the intended fix files remain
 
-Do NOT push — the orchestrator handles pushing.
+The `triage/` directory is already gitignored, so it won't appear in `git status`.
