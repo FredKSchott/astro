@@ -103,12 +103,7 @@ meaningful reproduction information, respond with exactly "no".`,
 	const branchName = isPushed ? flue.branch : null;
 	const comment = await flue.skill('triage/comment.md', {
 		args: { branchName },
-		result: v.pipe(
-			v.string(),
-			v.description(
-				'The generated comment, in its entirety.',
-			),
-		),
+		result: v.pipe(v.string(), v.description('Use the included "Step 2: Generate Comment > Template" template to generate the comment here, as the "result" return value. Follow the template EXACTLY.')),
 	});
 
 	await flue.shell(`gh issue comment ${issueNumber} --body-file -`, {
@@ -117,8 +112,8 @@ meaningful reproduction information, respond with exactly "no".`,
 	});
 
 	// Manage labels based on triage outcome
-	if (reproduceResult.reproducible) {
-		// Success: remove label and unassign Houston — exits the loop
+	if (reproduceResult.reproducible || reproduceResult.skipped) {
+		// Reproduced or skipped (sandbox limitation): remove label and unassign Houston — exits the loop
 		await flue.shell(
 			`gh issue edit ${issueNumber} --remove-label "needs triage" --remove-assignee "astrobot-houston"`,
 			{ env: { GH_TOKEN: flue.secrets.GITHUB_TOKEN } },

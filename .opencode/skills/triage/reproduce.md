@@ -31,7 +31,7 @@ Read carefully:
 
 ## Step 2: Check for Early Exit Conditions
 
-Before attempting reproduction, check if this issue should be skipped:
+Before attempting reproduction, check if this issue should be skipped due to a limitation of our sandbox reproduction environment. These reasons include:
 
 **Unsupported Astro Version:**
 - Astro 4.x or earlier → Write `report.md` noting the skip and exit
@@ -46,6 +46,11 @@ Before attempting reproduction, check if this issue should be skipped:
 **Runtime-Specific Issues:**
 - Bug is specific to Bun or Deno (not Node.js)
 - → Write `report.md` noting the skip reason ("unsupported-runtime") and exit
+
+**A maintainer override:**
+- A maintainer may comment in the issue, stating that the issue cannot be successfully reproduced here, with or without a reason.
+- You can check a user's maintainer status: `gh api "repos/<owner>/<repo>/collaborators/<user>" --silent && echo "user is collaborator"`
+- → Write `report.md` noting the skip reason ("maintainer-override") and exit
 
 If any early exit condition is met, skip to Step 6 and write `report.md` with the skip details.
 
