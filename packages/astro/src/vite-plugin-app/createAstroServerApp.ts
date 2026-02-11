@@ -74,6 +74,7 @@ export default async function createAstroServerApp(
 	}
 
 	return {
+		app,
 		handler(incomingRequest: http.IncomingMessage, incomingResponse: http.ServerResponse) {
 			app.handleRequest({
 				controller,

@@ -37,6 +37,13 @@ function invalidateDataStore(viteServer: ViteDevServer) {
 	if (module) {
 		environment.moduleGraph.invalidateModule(module);
 	}
+
+	// Clear route cache to ensure getStaticPaths() re-runs with fresh content
+	const clearRouteCache = (viteServer as any).__astro_clearRouteCache;
+	if (clearRouteCache) {
+		clearRouteCache();
+	}
+
 	viteServer.environments.client.hot.send({
 		type: 'full-reload',
 		path: '*',

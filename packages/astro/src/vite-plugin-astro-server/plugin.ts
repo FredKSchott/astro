@@ -62,11 +62,16 @@ export default function createVitePluginAstroServer({
 					typeof import('../vite-plugin-app/createAstroServerApp.js')
 				>(ASTRO_DEV_SERVER_APP_ID);
 			const controller = createController({ loader });
-			const { handler } = await createAstroServerApp(controller, settings, loader, logger);
+			const { handler, app } = await createAstroServerApp(controller, settings, loader, logger);
 			const { manifest } = await environment.runner.import<{
 				manifest: SSRManifest;
 			}>(SERIALIZED_MANIFEST_ID);
 			const localStorage = new AsyncLocalStorage();
+
+			// Store a reference to clearRouteCache for use by other plugins
+			(viteServer as any).__astro_clearRouteCache = () => {
+				app.pipeline.clearRouteCache();
+			};
 
 			function handleUnhandledRejection(rejection: any) {
 				const error = AstroError.is(rejection)
