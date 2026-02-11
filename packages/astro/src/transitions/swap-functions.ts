@@ -161,6 +161,15 @@ const persistedHeadElement = (el: HTMLElement, newDoc: Document): Element | null
 		const href = el.getAttribute('href');
 		return newDoc.head.querySelector(`link[rel=stylesheet][href="${href}"]`);
 	}
+	// Match identical inline <style> tags by content to preserve @font-face and other styles
+	if (el.tagName === 'STYLE') {
+		const content = el.textContent;
+		for (const newStyle of newDoc.head.querySelectorAll('style')) {
+			if (newStyle.textContent === content) {
+				return newStyle;
+			}
+		}
+	}
 	return null;
 };
 
