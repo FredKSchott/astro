@@ -103,7 +103,12 @@ meaningful reproduction information, respond with exactly "no".`,
 	const branchName = isPushed ? flue.branch : null;
 	const comment = await flue.skill('triage/comment.md', {
 		args: { branchName },
-		result: v.string(),
+		result: v.pipe(
+		v.string(),
+		v.description(
+			'The generated comment, in its entirety.',
+		),
+	),,
 	});
 
 	await flue.shell(`gh issue comment ${issueNumber} --body-file -`, {

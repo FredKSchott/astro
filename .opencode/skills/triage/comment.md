@@ -61,12 +61,10 @@ Format requirements:
 *This report was made by an LLM. Mistakes happen, check important info.*
 ```
 
-## Step 3: Post the Comment (Optional)
-
-If the user wants to post the comment to GitHub, you can do so with the `gh` CLI:
+## Step 3 -- ONLY IF THE USER ASKED YOU TO DO THIS!
 
 ```bash
-gh issue comment <issue_number> --body-file <path-to-comment-file>
+gh issue comment <issue_number> --body <comment>
 ```
 
-You can suggest posting it if you think it would be helpful.
+You are only allowed to post the comment directly to GitHub ONLY if the user already specifically asked you to. Otherwise, you can SUGGEST this to the user, as a potential follow-up step, but only if you think it would be helpful given the context.
