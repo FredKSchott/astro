@@ -53,6 +53,6 @@ jobs:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
           pnpm flue run .flue/workflows/triage.ts \
-            --args "{\"issueNumber\": $ISSUE_NUMBER}" \
+            --args "{\"issueNumber\": $ISSUE_NUMBER, \"triageDir\": \"triage/issue-$ISSUE_NUMBER\"}" \
             --branch "flue/fix-$ISSUE_NUMBER" \
             --model anthropic/claude-sonnet-4-5
