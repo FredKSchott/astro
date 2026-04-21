@@ -1,6 +1,6 @@
 import * as v from 'valibot';
 
-const REPO = 'withastro/astro';
+const REPO = process.env.GITHUB_REPOSITORY || 'withastro/astro';
 
 function headers(): Record<string, string> {
 	const token = process.env.FREDKBOT_GITHUB_TOKEN || process.env.GITHUB_TOKEN;
