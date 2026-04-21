@@ -70,6 +70,11 @@ jobs:
           node-version: 24.14.1
           cache: pnpm
 
+      - name: Install agent CLIs (bgproc, agent-browser)
+        run: |
+          npm install -g bgproc agent-browser
+          agent-browser install
+
       - name: Clone Astro Compiler (for debugging)
         run: git clone --depth 1 https://github.com/withastro/compiler.git .compiler
 

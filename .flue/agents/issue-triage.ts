@@ -17,7 +17,7 @@ export const triggers = {};
 
 // Connect privileged CLIs to the agent without leaking secrets. The agent can
 // call `gh` in the sandbox, but never sees GH_TOKEN itself. Commands are
-// granted per-skill via the `commands: [gh]` option.
+// granted per-skill via the `commands: [...]` option.
 const execFileAsync = promisify(execFile);
 const gh = defineCommand('gh', async (args) => {
 	try {
@@ -34,6 +34,24 @@ const gh = defineCommand('gh', async (args) => {
 		return { stdout: e.stdout ?? '', stderr: e.stderr ?? String(err), exitCode: e.code ?? 1 };
 	}
 });
+
+// Pass-through command runner for CLIs that don't need secret scrubbing.
+function passthrough(name: string) {
+	return defineCommand(name, async (args) => {
+		try {
+			const { stdout, stderr } = await execFileAsync(name, args, {
+				env: process.env,
+				maxBuffer: 50 * 1024 * 1024,
+			});
+			return { stdout, stderr, exitCode: 0 };
+		} catch (err: unknown) {
+			const e = err as { stdout?: string; stderr?: string; code?: number };
+			return { stdout: e.stdout ?? '', stderr: e.stderr ?? String(err), exitCode: e.code ?? 1 };
+		}
+	});
+}
+const bgproc = passthrough('bgproc');
+const agentBrowser = passthrough('agent-browser');
 
 function assert(condition: unknown, message: string): asserts condition {
 	if (!condition) throw new Error(message);
@@ -136,7 +154,7 @@ async function runTriagePipeline(
 }> {
 	const reproduceResult = await session.skill('triage/reproduce.md', {
 		args: { issueNumber, issueDetails },
-		commands: [gh],
+		commands: [gh, bgproc, agentBrowser],
 		result: v.object({
 			reproducible: v.pipe(
 				v.boolean(),
@@ -165,7 +183,7 @@ async function runTriagePipeline(
 
 	const diagnoseResult = await session.skill('triage/diagnose.md', {
 		args: { issueDetails },
-		commands: [gh],
+		commands: [gh, bgproc, agentBrowser],
 		result: v.object({
 			confidence: v.pipe(
 				v.nullable(v.picklist(['high', 'medium', 'low'])),
@@ -175,7 +193,7 @@ async function runTriagePipeline(
 	});
 	const verifyResult = await session.skill('triage/verify.md', {
 		args: { issueDetails },
-		commands: [gh],
+		commands: [gh, bgproc, agentBrowser],
 		result: v.object({
 			verdict: v.pipe(
 				v.picklist(['bug', 'intended-behavior', 'unclear']),
@@ -202,7 +220,7 @@ async function runTriagePipeline(
 
 	const fixResult = await session.skill('triage/fix.md', {
 		args: { issueDetails },
-		commands: [gh],
+		commands: [gh, bgproc, agentBrowser],
 		result: v.object({
 			fixed: v.pipe(
 				v.boolean(),
@@ -288,7 +306,7 @@ export default async function ({ init, payload }: FlueContext) {
 	const branchName = isPushed ? branch : null;
 	const comment = await session.skill('triage/comment.md', {
 		args: { branchName, priorityLabels, issueDetails },
-		commands: [gh],
+		commands: [gh, bgproc, agentBrowser],
 		result: v.pipe(
 			v.string(),
 			v.description(
