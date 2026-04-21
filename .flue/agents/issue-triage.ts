@@ -1,5 +1,6 @@
-import type { FlueClient } from '@flue/client';
-import { anthropic, github, githubBody } from '@flue/client/proxies';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { defineCommand, type FlueContext, type FlueSession } from '@flue/sdk/client';
 import * as v from 'valibot';
 import {
 	type IssueDetails,
@@ -9,31 +10,37 @@ import {
 	fetchRepoLabels,
 	postGitHubComment,
 	removeGitHubLabel,
-} from './github.ts';
+} from '../lib/github.ts';
 
-export const proxies = {
-	anthropic: anthropic(),
-	github: github({
-		policy: {
-			base: 'allow-read',
-			allow: [
-				// Allow read-only access to the GraphQL endpoint
-				{ method: 'POST', path: '/graphql', body: githubBody.graphql() },
-				// Allow git clone, fetch, and push over smart HTTP transport
-				{ method: 'GET', path: '/*/*/info/refs' },
-				{ method: 'POST', path: '/*/*/git-upload-pack' },
-				{ method: 'POST', path: '/*/*/git-receive-pack' },
-			],
-		},
-	}),
-};
+// CLI-only agent: no HTTP trigger. Invoked from GitHub Actions via `flue run issue-triage`.
+export const triggers = {};
+
+// Connect privileged CLIs to the agent without leaking secrets. The agent can
+// call `gh` in the sandbox, but never sees GH_TOKEN itself. Commands are
+// granted per-skill via the `commands: [gh]` option.
+const execFileAsync = promisify(execFile);
+const gh = defineCommand('gh', async (args) => {
+	try {
+		const { stdout, stderr } = await execFileAsync('gh', args, {
+			env: {
+				...process.env,
+				GH_TOKEN: process.env.FREDKBOT_GITHUB_TOKEN || process.env.GH_TOKEN || '',
+			},
+			maxBuffer: 50 * 1024 * 1024,
+		});
+		return { stdout, stderr, exitCode: 0 };
+	} catch (err: unknown) {
+		const e = err as { stdout?: string; stderr?: string; code?: number };
+		return { stdout: e.stdout ?? '', stderr: e.stderr ?? String(err), exitCode: e.code ?? 1 };
+	}
+});
 
 function assert(condition: unknown, message: string): asserts condition {
 	if (!condition) throw new Error(message);
 }
 
-async function shouldRetriage(flue: FlueClient, issue: IssueDetails): Promise<'yes' | 'no'> {
-	return flue.prompt(
+async function shouldRetriage(session: FlueSession, issue: IssueDetails): Promise<'yes' | 'no'> {
+	return session.prompt(
 		`You are reviewing a GitHub issue conversation to decide whether a triage re-run is warranted.
 
 ## Issue
@@ -65,7 +72,7 @@ Return only "yes" or "no" inside the ---RESULT_START--- / ---RESULT_END--- block
 }
 
 async function selectTriageLabels(
-	flue: FlueClient,
+	session: FlueSession,
 	{
 		comment,
 		priorityLabels,
@@ -75,7 +82,7 @@ async function selectTriageLabels(
 	const priorityLabelNames = priorityLabels.map((l) => l.name);
 	const packageLabelNames = packageLabels.map((l) => l.name);
 
-	const labelResult = await flue.prompt(
+	const labelResult = await session.prompt(
 		`Label the following GitHub issue based on the triage report that was already posted.
 
 Select labels for this issue from the lists below based on the triage report. Select exactly one priority label (the report's **Priority** section is a strong hint) and 0-3 package labels based on where the issue lives in the monorepo and how it manifests.
@@ -114,7 +121,7 @@ ${comment}
 }
 
 async function runTriagePipeline(
-	flue: FlueClient,
+	session: FlueSession,
 	issueNumber: number,
 	issueDetails: IssueDetails,
 ): Promise<{
@@ -127,8 +134,9 @@ async function runTriagePipeline(
 	fixed: boolean;
 	commitMessage: string | null;
 }> {
-	const reproduceResult = await flue.skill('triage/reproduce.md', {
+	const reproduceResult = await session.skill('triage/reproduce.md', {
 		args: { issueNumber, issueDetails },
+		commands: [gh],
 		result: v.object({
 			reproducible: v.pipe(
 				v.boolean(),
@@ -155,8 +163,9 @@ async function runTriagePipeline(
 		};
 	}
 
-	const diagnoseResult = await flue.skill('triage/diagnose.md', {
+	const diagnoseResult = await session.skill('triage/diagnose.md', {
 		args: { issueDetails },
+		commands: [gh],
 		result: v.object({
 			confidence: v.pipe(
 				v.nullable(v.picklist(['high', 'medium', 'low'])),
@@ -164,8 +173,9 @@ async function runTriagePipeline(
 			),
 		}),
 	});
-	const verifyResult = await flue.skill('triage/verify.md', {
+	const verifyResult = await session.skill('triage/verify.md', {
 		args: { issueDetails },
+		commands: [gh],
 		result: v.object({
 			verdict: v.pipe(
 				v.picklist(['bug', 'intended-behavior', 'unclear']),
@@ -190,8 +200,9 @@ async function runTriagePipeline(
 		};
 	}
 
-	const fixResult = await flue.skill('triage/fix.md', {
+	const fixResult = await session.skill('triage/fix.md', {
 		args: { issueDetails },
+		commands: [gh],
 		result: v.object({
 			fixed: v.pipe(
 				v.boolean(),
@@ -216,29 +227,32 @@ async function runTriagePipeline(
 	};
 }
 
-export const args = v.object({
-	issueNumber: v.number(),
-});
-
-export default async function triage(
-	flue: FlueClient,
-	{ issueNumber }: v.InferOutput<typeof args>,
-) {
+export default async function ({ init, payload }: FlueContext) {
+	const issueNumber = payload.issueNumber as number;
 	const branch = `flue/fix-${issueNumber}`;
+
+	// `local` mounts process.cwd() (the checked-out repo on the GHA runner) at
+	// /workspace. AGENTS.md and .agents/skills/* are auto-discovered from there.
+	// `model` sets the session-wide default for all prompt/skill calls.
+	const session = await init({
+		sandbox: 'local',
+		model: 'anthropic/claude-opus-4-6',
+	});
+
 	const issueDetails = await fetchIssueDetails(issueNumber);
 
 	// If there are prior comments, this is a re-triage. Check whether new
 	// actionable information has been provided before running the full pipeline.
 	const hasExistingConversation = issueDetails.comments.length > 0;
 	if (hasExistingConversation) {
-		const shouldRetriageResult = await shouldRetriage(flue, issueDetails);
+		const shouldRetriageResult = await shouldRetriage(session, issueDetails);
 		if (shouldRetriageResult === 'no') {
 			return { skipped: true, reason: 'No new actionable information' };
 		}
 	}
 
 	// Run the triage pipeline: reproduce → diagnose → verify → fix
-	const triageResult = await runTriagePipeline(flue, issueNumber, issueDetails);
+	const triageResult = await runTriagePipeline(session, issueNumber, issueDetails);
 	let isPushed = false;
 
 	// Push the fix branch if there are meaningful changes (fix, failing test, etc.).
@@ -247,19 +261,19 @@ export default async function triage(
 	// - create a PR from that branch entirely in the GH UI
 	// - ignore it completely
 	{
-		const diff = await flue.shell('git diff main --stat');
+		const diff = await session.shell('git diff main --stat');
 		if (diff.stdout.trim()) {
-			const status = await flue.shell('git status --porcelain');
+			const status = await session.shell('git status --porcelain');
 			if (status.stdout.trim()) {
-				await flue.shell('git add -A');
+				await session.shell('git add -A');
 				const defaultMessage = triageResult.fixed
 					? 'fix(auto-triage): automated fix'
 					: 'test(auto-triage): failing test and investigation notes';
-				await flue.shell(
+				await session.shell(
 					`git commit -m ${JSON.stringify(triageResult.commitMessage ?? defaultMessage)}`,
 				);
 			}
-			const pushResult = await flue.shell(`git push -f origin ${branch}`);
+			const pushResult = await session.shell(`git push -f origin ${branch}`);
 			console.info('push result:', pushResult);
 			isPushed = pushResult.exitCode === 0;
 		}
@@ -272,8 +286,9 @@ export default async function triage(
 	assert(packageLabels.length > 0, 'no package labels found');
 
 	const branchName = isPushed ? branch : null;
-	const comment = await flue.skill('triage/comment.md', {
+	const comment = await session.skill('triage/comment.md', {
 		args: { branchName, priorityLabels, issueDetails },
+		commands: [gh],
 		result: v.pipe(
 			v.string(),
 			v.description(
@@ -286,7 +301,7 @@ export default async function triage(
 
 	if (triageResult.reproducible) {
 		await removeGitHubLabel(issueNumber, 'needs triage');
-		const selectedLabels = await selectTriageLabels(flue, {
+		const selectedLabels = await selectTriageLabels(session, {
 			comment,
 			priorityLabels,
 			packageLabels,
