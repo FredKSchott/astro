@@ -52,6 +52,9 @@ function passthrough(name: string) {
 }
 const bgproc = passthrough('bgproc');
 const agentBrowser = passthrough('agent-browser');
+const git = passthrough('git');
+const node = passthrough('node');
+const pnpm = passthrough('pnpm');
 
 function assert(condition: unknown, message: string): asserts condition {
 	if (!condition) throw new Error(message);
@@ -154,7 +157,7 @@ async function runTriagePipeline(
 }> {
 	const reproduceResult = await session.skill('triage/reproduce.md', {
 		args: { issueNumber, issueDetails },
-		commands: [gh, bgproc, agentBrowser],
+		commands: [gh, bgproc, agentBrowser, git, node, pnpm],
 		result: v.object({
 			reproducible: v.pipe(
 				v.boolean(),
@@ -183,7 +186,7 @@ async function runTriagePipeline(
 
 	const diagnoseResult = await session.skill('triage/diagnose.md', {
 		args: { issueDetails },
-		commands: [gh, bgproc, agentBrowser],
+		commands: [gh, bgproc, agentBrowser, git, node, pnpm],
 		result: v.object({
 			confidence: v.pipe(
 				v.nullable(v.picklist(['high', 'medium', 'low'])),
@@ -193,7 +196,7 @@ async function runTriagePipeline(
 	});
 	const verifyResult = await session.skill('triage/verify.md', {
 		args: { issueDetails },
-		commands: [gh, bgproc, agentBrowser],
+		commands: [gh, bgproc, agentBrowser, git, node, pnpm],
 		result: v.object({
 			verdict: v.pipe(
 				v.picklist(['bug', 'intended-behavior', 'unclear']),
@@ -220,7 +223,7 @@ async function runTriagePipeline(
 
 	const fixResult = await session.skill('triage/fix.md', {
 		args: { issueDetails },
-		commands: [gh, bgproc, agentBrowser],
+		commands: [gh, bgproc, agentBrowser, git, node, pnpm],
 		result: v.object({
 			fixed: v.pipe(
 				v.boolean(),
@@ -306,7 +309,7 @@ export default async function ({ init, payload }: FlueContext) {
 	const branchName = isPushed ? branch : null;
 	const comment = await session.skill('triage/comment.md', {
 		args: { branchName, priorityLabels, issueDetails },
-		commands: [gh, bgproc, agentBrowser],
+		commands: [gh, bgproc, agentBrowser, git, node, pnpm],
 		result: v.pipe(
 			v.string(),
 			v.description(
